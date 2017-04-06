@@ -1,0 +1,371 @@
+#include "control.h"
+#include <locale.h>
+#include <math.h>
+
+#define LP_SIZE_PITCH_ANGLE 			1
+#define LP_SIZE_ROLL_ANGLE 				1
+#define SERV_ROLL_ANGLE_CMD_MAX			1.0
+#define SERV_PITCH_ANGLE_CMD_MAX		1.0
+#define SERV_YAW_ANGLE_CMD_MAX			0.4
+#define SERV_ROLL_ANGLE_CMD_MIN			-1.0
+#define SERV_PITCH_ANGLE_CMD_MIN		-1.0
+#define SERV_YAW_ANGLE_CMD_MIN			-0.4
+#define SERV_YAW_ANGLE_RATE_MAX			200.0
+#define SERV_YAW_ANGLE_RATE_MIN			-200.0
+#define SERV_PITCH_ANGLE_RATE_MAX		200.0
+#define SERV_PITCH_ANGLE_RATE_MIN		-200.0
+#define SERV_ROLL_ANGLE_RATE_MAX		200.0
+#define SERV_ROLL_ANGLE_RATE_MIN		-200.0
+#define CONTROL_MAX_MOT_CMD				1.0
+#define CONTROL_MIN_MOT_CMD				0.2
+#define CONTROL_LP_TABLE_SIZE			5
+
+static int firstItter_roll_rate = 1, firstItter_yaw_rate = 1, firstItter_picth_rate = 1;
+static int firstItter_roll_angle = 1, firstItter_yaw_angle = 1, firstItter_pitch_angle = 1;
+
+void CONTROL_Init_rate(void);
+void CONTROL_Init_angle(void);
+
+float CONTROL_rollPID_rate(float c, float m);
+float CONTROL_pitchPID_rate(float c, float m);
+float CONTROL_yawPID_rate(float c, float m);
+float CONTROL_yawPID_angle(float c, float m);
+float CONTROL_pitchPID_angle(float c, float m);
+float CONTROL_rollPID_angle(float c, float m);
+void CONTROL_rollPID_rate_LP(long in , long *out);
+void CONTROL_pitchPID_rate_LP(long in , long *out);
+
+void CONTROL_Init(){
+
+	CONTROL_Init_rate();
+	CONTROL_Init_angle();
+}
+
+void CONTROL_callBack(float rec_yaw, float rec_pitch,
+		float rec_roll, float rec_gas,
+		float rec_aux1, float rec_aux2,
+		float *mot_cmd_avd, float *mot_cmd_avg,
+		float *mot_cmd_ard, float *mot_cmd_arg,
+		float w_x, float w_y, float w_z,
+		float yaw, float pitch, float roll,
+		float *state)
+{
+	float alt_cmd = 0, roll_cmd = 0, pitch_cmd = 0, yaw_cmd = 0;
+
+	if(rec_aux1 > 0.0){
+
+		alt_cmd 	= (rec_gas + 1.0) * 0.5;
+
+		if (rec_aux2 < 0.0){	//Rate control mode
+			yaw_cmd 	= CONTROL_yawPID_rate(100.0 * rec_yaw, w_z);
+			roll_cmd 	= CONTROL_rollPID_rate(100.0 * rec_roll, w_x);
+			pitch_cmd	= CONTROL_pitchPID_rate(100.0 * rec_pitch, w_y);
+		}
+
+		else if (rec_aux2 > 0.0){	//Angle control mode
+//			yaw_cmd 	= CONTROL_yawPID_rate(0, w_z);
+//			roll_cmd 	= CONTROL_rollPID_rate(0, w_x);
+//			pitch_cmd	= CONTROL_pitchPID_rate(0, w_y);
+			yaw_cmd 	= CONTROL_yawPID_rate(0.0 * rec_yaw, w_z);
+			roll_cmd 	= CONTROL_rollPID_rate(CONTROL_rollPID_angle(0.0 * rec_roll, roll), w_x);
+			pitch_cmd	= CONTROL_pitchPID_rate(CONTROL_pitchPID_angle(0.0* rec_pitch, pitch), w_y);
+		}
+
+		/*AVD*/*mot_cmd_avd = - roll_cmd + pitch_cmd + yaw_cmd + alt_cmd;
+		/*AVG*/*mot_cmd_avg = + roll_cmd + pitch_cmd - yaw_cmd + alt_cmd;
+		/*ARD*/*mot_cmd_ard = - roll_cmd - pitch_cmd - yaw_cmd + alt_cmd;
+		/*ARG*/*mot_cmd_arg = + roll_cmd - pitch_cmd + yaw_cmd + alt_cmd;
+
+		//Command limitation (not limited in controller source file):
+		if(*mot_cmd_avd < CONTROL_MIN_MOT_CMD)
+			*mot_cmd_avd = CONTROL_MIN_MOT_CMD;
+		if(*mot_cmd_avg < CONTROL_MIN_MOT_CMD)
+			*mot_cmd_avg = CONTROL_MIN_MOT_CMD;
+		if(*mot_cmd_ard < CONTROL_MIN_MOT_CMD)
+			*mot_cmd_ard = CONTROL_MIN_MOT_CMD;
+		if(*mot_cmd_arg < CONTROL_MIN_MOT_CMD)
+			*mot_cmd_arg = CONTROL_MIN_MOT_CMD;
+
+		if(*mot_cmd_avd > CONTROL_MAX_MOT_CMD)
+			*mot_cmd_avd = CONTROL_MAX_MOT_CMD;
+		if(*mot_cmd_avg > CONTROL_MAX_MOT_CMD)
+			*mot_cmd_avg = CONTROL_MAX_MOT_CMD;
+		if(*mot_cmd_ard > CONTROL_MAX_MOT_CMD)
+			*mot_cmd_ard = CONTROL_MAX_MOT_CMD;
+		if(*mot_cmd_arg > CONTROL_MAX_MOT_CMD)
+			*mot_cmd_arg = CONTROL_MAX_MOT_CMD;
+	}
+
+	else if(rec_aux1 < 0.0){
+		*mot_cmd_avd = 0.0;
+		*mot_cmd_avg = 0.0;
+		*mot_cmd_ard = 0.0;
+		*mot_cmd_arg = 0.0;
+
+		CONTROL_Init_rate();
+		CONTROL_Init_angle();
+	}
+}
+
+void CONTROL_Init_rate(void){
+
+	firstItter_yaw_rate = 1;
+	firstItter_roll_rate = 1;
+	firstItter_picth_rate = 1;
+}
+
+void CONTROL_Init_angle(void){
+
+	firstItter_yaw_angle = 1;
+	firstItter_roll_angle = 1;
+	firstItter_pitch_angle = 1;
+}
+
+float CONTROL_rollPID_rate(float c, float m) {
+
+	float u = 0.0, e = 0.0;
+	static float ei = 0.0, ed = 0.0, eo = 0.0;
+	float kp = 0.001, ki = 0.00000001, kd = 0.000015;//0.000015
+//	float kp = 0.0008, ki = 0.00000001, kd = 0.0000075;
+	float dt_inv = 1000.0;
+
+	//Initialization:
+	if(firstItter_roll_rate == 1){
+		firstItter_roll_rate = 0;
+		ei = 0.0;
+		ed = 0.0;
+		eo = 0.0;
+	}
+
+	//Controller:
+	e = c - m;
+	ei += (e + eo) * 0.5f * dt_inv;
+	//ed = (e - eo) * dt_inv;
+	long ed_tmp;
+	CONTROL_rollPID_rate_LP((long)((e - eo) * 10000.0) , &ed_tmp);	//Magic
+	ed = (float)ed_tmp * 0.1;
+
+	u = kp * e + ki * ei + kd * ed;
+
+	//ARW (Anti-Reset Windup)
+	if (u > SERV_ROLL_ANGLE_CMD_MAX) {
+		u = SERV_ROLL_ANGLE_CMD_MAX;
+	}
+	else if (u < SERV_ROLL_ANGLE_CMD_MIN) {
+		u = SERV_ROLL_ANGLE_CMD_MIN;
+	}
+
+	eo = e;
+
+	return u;
+}
+
+float CONTROL_pitchPID_rate(float c, float m) {
+
+	float u = 0.0, e = 0.0;
+	static float ei = 0.0, ed = 0.0, eo = 0.0;
+	float kp = 0.001, ki = 0.00000001, kd = 0.000015;//0.000015
+	float dt_inv = 1000.0;
+
+	if(firstItter_picth_rate == 1){
+		firstItter_picth_rate = 0;
+		ei = 0.0;
+		ed = 0.0;
+		eo = 0.0;
+	}
+
+	e = c - m;
+	ei += (e + eo) * 0.5f * dt_inv;
+	//ed = (e - eo) * dt_inv;
+	long ed_tmp;
+	CONTROL_pitchPID_rate_LP((long)((e - eo) * 10000.0) , &ed_tmp);	//Magic
+	ed = (float)ed_tmp * 0.1;
+
+	u = kp * e + ki * ei + kd * ed;
+
+	//ARW (Anti-Reset Windup)
+	if (u > SERV_PITCH_ANGLE_CMD_MAX) {
+		u = SERV_PITCH_ANGLE_CMD_MAX;
+	}
+	else if (u < SERV_PITCH_ANGLE_CMD_MIN) {
+		u = SERV_PITCH_ANGLE_CMD_MIN;
+	}
+
+	eo = e;
+
+	return u;
+}
+
+float CONTROL_yawPID_rate(float c, float m) {
+
+	float u = 0.0, e = 0.0;
+	static float ei = 0.0, ed = 0.0, eo = 0.0;
+	float kp = 0.0015, ki = 0.00000001, kd = 0.0000;
+	float dt_inv = 1000.0;
+
+	if(firstItter_yaw_rate == 1){
+		firstItter_yaw_rate = 0;
+		ei = 0.0;
+		ed = 0.0;
+		eo = 0.0;
+	}
+
+	//Controller:
+	e = c - m;
+	ei += (e + eo) * 0.5f * dt_inv;
+	ed = (e - eo) * dt_inv;
+	//lowPassFilter_ch_roll_rate((e - eo) / dt , &ed);
+	u = kp * e + ki * ei + kd * ed;
+
+	//ARW (Anti-Reset Windup)
+	if (u > SERV_YAW_ANGLE_CMD_MAX) {
+		u = SERV_YAW_ANGLE_CMD_MAX;
+	}
+	else if (u < SERV_YAW_ANGLE_CMD_MIN) {
+		u = SERV_YAW_ANGLE_CMD_MIN;
+	}
+
+	eo = e;
+
+	return u;
+}
+
+float CONTROL_yawPID_angle(float c, float m) {
+
+	float u = 0.0, e = 0.0;
+	static float ei = 0.0, ed = 0.0, eo = 0.0;
+	float kp = 0.0002, ki = 0.0, kd = 0.0;
+	float dt_inv = 1000.0;
+
+	if(firstItter_yaw_angle == 1){
+		firstItter_yaw_angle = 0;
+		ei = 0.0;
+		ed = 0.0;
+		eo = 0.0;
+	}
+
+	//Controller:
+	e = c - m;
+	ei += (e + eo) * 0.5f * dt_inv;
+	ed = (e - eo) * dt_inv;
+
+	u = kp * e + ki * ei + kd * ed;
+
+	//ARW (Anti-Reset Windup)
+	if (u > SERV_YAW_ANGLE_RATE_MAX) {
+		u = SERV_YAW_ANGLE_RATE_MAX;
+	}
+	else if (u < SERV_YAW_ANGLE_RATE_MIN) {
+		u = SERV_YAW_ANGLE_RATE_MIN;
+	}
+
+	eo = e;
+
+	return u;
+}
+
+float CONTROL_pitchPID_angle(float c, float m) {
+
+	float u = 0.0, e = 0.0;
+	static float ei = 0.0, ed = 0.0, eo = 0.0;
+	float kp = 300.0, ki = 0.000, kd = 0.0;
+	float dt_inv = 1000.0;
+
+	if(firstItter_pitch_angle == 1){
+		firstItter_pitch_angle = 0;
+		ei = 0.0;
+		ed = 0.0;
+		eo = 0.0;
+	}
+
+	//Controller:
+	e = c - m;
+	ei += (e + eo) * 0.5f * dt_inv;
+	ed = (e - eo) * dt_inv;
+
+	u = kp * e + ki * ei + kd * ed;
+
+	//ARW (Anti-Reset Windup)
+	if (u > SERV_PITCH_ANGLE_RATE_MAX) {
+		u = SERV_PITCH_ANGLE_RATE_MAX;
+	}
+	else if (u < SERV_PITCH_ANGLE_RATE_MIN) {
+		u = SERV_PITCH_ANGLE_RATE_MIN;
+	}
+
+	eo = e;
+
+	return u;
+}
+
+float CONTROL_rollPID_angle(float c, float m) {
+
+	float u = 0.0, e = 0.0;
+	static float ei = 0.0, ed = 0.0, eo = 0.0;
+	float kp = 300.0, ki = 0.000, kd =0.0;
+	float dt_inv = 1000.0;
+
+	if(firstItter_roll_angle == 1){
+		firstItter_roll_angle = 0;
+		ei = 0.0;
+		ed = 0.0;
+		eo = 0.0;
+	}
+
+	//Controller:
+	e = c - m;
+	ei += (e + eo) * 0.5f * dt_inv;
+	ed = (e - eo) * dt_inv;
+
+	u = kp * e + ki * ei + kd * ed;
+
+	//ARW (Anti-Reset Windup)
+	if (u > SERV_ROLL_ANGLE_RATE_MAX) {
+		u = SERV_ROLL_ANGLE_RATE_MAX;
+	}
+	else if (u < SERV_ROLL_ANGLE_RATE_MIN) {
+		u = SERV_ROLL_ANGLE_RATE_MIN;
+	}
+
+	eo = e;
+
+	return u;
+}
+
+void CONTROL_rollPID_rate_LP(long in , long *out) {
+
+	long mem_mean = 0;
+	static long mem[CONTROL_LP_TABLE_SIZE] = {0};
+
+	int i;
+	for (i = 0; i < CONTROL_LP_TABLE_SIZE - 1; i++) {
+		mem[i] = mem[i + 1];
+	}
+	mem[CONTROL_LP_TABLE_SIZE - 1] = in;
+
+	for (i = 0; i < CONTROL_LP_TABLE_SIZE; i++) {
+		mem_mean += mem[i];
+	}
+	mem_mean /= (long)CONTROL_LP_TABLE_SIZE;
+
+	*out = mem_mean;
+}
+
+void CONTROL_pitchPID_rate_LP(long in , long *out) {
+
+	long mem_mean = 0;
+	static long mem[CONTROL_LP_TABLE_SIZE] = {0};
+
+	int i;
+	for (i = 0; i < CONTROL_LP_TABLE_SIZE - 1; i++) {
+		mem[i] = mem[i + 1];
+	}
+	mem[CONTROL_LP_TABLE_SIZE - 1] = in;
+
+	for (i = 0; i < CONTROL_LP_TABLE_SIZE; i++) {
+		mem_mean += mem[i];
+	}
+	mem_mean /= (long)CONTROL_LP_TABLE_SIZE;
+
+	*out = mem_mean;
+}

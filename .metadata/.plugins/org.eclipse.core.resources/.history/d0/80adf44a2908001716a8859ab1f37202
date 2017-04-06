@@ -1,0 +1,256 @@
+#include "Cpu.h"
+#include "Events.h"
+#include "FRTOS1.h"
+#include "MCUC1.h"
+#include "UTIL1.h"
+#include "CI2C1.h"
+#include "EInt1.h"
+#include "EInt2.h"
+#include "EInt3.h"
+#include "EInt4.h"
+#include "EInt5.h"
+#include "EInt6.h"
+#include "EInt7.h"
+#include "PWM1.h"
+#include "TU1.h"
+#include "PWM2.h"
+#include "PWM3.h"
+#include "PWM4.h"
+#include "FC1.h"
+#include "TU3.h"
+#include "USB1.h"
+#include "CDC1.h"
+#include "Tx1.h"
+#include "Rx1.h"
+#include "USB0.h"
+#include "CLS1.h"
+#include "CS1.h"
+#include "WAIT1.h"
+#include "TMOUT1.h"
+#include "XF1.h"
+#include "GPIO1.h"
+/* Including shared modules, which are used for whole project */
+#include "PE_Types.h"
+#include "PE_Error.h"
+#include "PE_Const.h"
+#include "IO_Map.h"
+
+#include "libSENSVECT/GYROACCVect.h"
+#include "libMOTDRIVE/optoe300.h"
+#include "libRECDRIVER/recdriver.h"
+#include "libUSB/usbdrive.h"
+#include "libCONTROL/control.h"
+#include "libUSB/com.h"
+#include "libUSB/an_packets.h"
+#include "global.h"
+#include "libADCS/gAtt.h"
+
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+
+
+typedef struct {
+	LDD_TDeviceData *handle; /* LDD device handle */
+} GPIO1_Dev;
+
+GPIO1_Dev gpio1Dev;
+
+float observator[10] = {0};
+
+static portTASK_FUNCTION(Task_adcs, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+	GYROACCVECT_Init();
+
+	while(GYROACCVECT_CheckForStabilization() == FALSE){
+		FRTOS1_vTaskDelay(GYROACCVECT_INIT_GYRO_CALIB_TRESH_SAMPL_DELAY/portTICK_RATE_MS);
+	}
+
+	while(GYROACCVECT_calibOffsets() == FALSE){
+		FRTOS1_vTaskDelay(GYROACCVECT_SAMPL_DELAY/portTICK_RATE_MS);
+	}
+
+	for(;;) {
+
+		//GPIO1_ToggleFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		float G[3] = {0}, A[3] = {0};
+		if(GYROACCVECT_GetVector(G, A) == 0){
+			gstate.w_x 	= G[0];
+			gstate.w_y 	= G[1];
+			gstate.w_z 	= G[2];
+
+			gstate.a_x 	= A[0];
+			gstate.a_y 	= A[1];
+			gstate.a_z 	= A[2];
+		}
+
+		//GATT_getAtt(G, A, Eul, 1/0.01);
+
+		FRTOS1_vTaskDelay(2/portTICK_RATE_MS);	//500Hz
+	}
+}
+
+static portTASK_FUNCTION(Task_control, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+
+	FRTOS1_vTaskDelay(3000/portTICK_RATE_MS);
+
+	OPTOE300_Init();
+
+	gstate.mot_cmd[MOT_AVD] = 0;
+	gstate.mot_cmd[MOT_AVG] = 0;
+	gstate.mot_cmd[MOT_ARD] = 0;
+	gstate.mot_cmd[MOT_ARG] = 0;
+
+	OPTOE300_SetSpeed(gstate.mot_cmd);
+
+	FRTOS1_vTaskDelay(1000/portTICK_RATE_MS);
+
+	for(;;) {
+
+		CONTROL_callBack(gstate.rec_ch[REC_YAW], gstate.rec_ch[REC_PITCH],
+				gstate.rec_ch[REC_ROLL], gstate.rec_ch[REC_GAS],
+				gstate.rec_ch[REC_AUX1], gstate.rec_ch[REC_AUX2],
+				&gstate.mot_cmd[MOT_AVD], &gstate.mot_cmd[MOT_AVG],
+				&gstate.mot_cmd[MOT_ARD], &gstate.mot_cmd[MOT_ARG],
+				gstate.w_x, gstate.w_y, gstate.w_z,
+				observator);
+
+		OPTOE300_SetSpeed(gstate.mot_cmd);
+
+		GPIO1_ToggleFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		FRTOS1_vTaskDelay(3/portTICK_RATE_MS);	//500 Hz
+	}
+}
+
+static portTASK_FUNCTION(Task_receiver, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+	RECDRIVER_Init(TRUE);
+
+	FRTOS1_vTaskDelay(RECDRIVER_SAMPL_DELAY/portTICK_RATE_MS);	//Give time to make at least one turn !
+
+	while(RECDRIVER_calibOffsets() == FALSE){
+		FRTOS1_vTaskDelay(RECDRIVER_SAMPL_DELAY/portTICK_RATE_MS);
+	}
+
+	for(;;) {
+
+		RECDRIVER_GetAllChannelValue(gstate.rec_ch, TRUE);
+
+		//GPIO1_ToggleFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		FRTOS1_vTaskDelay(20/portTICK_RATE_MS);
+	}
+}
+
+static portTASK_FUNCTION(Task_logger, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+	for(;;) {
+
+		//		USBDRIVE_PrintDouble(gstate.rec_ch[REC_YAW]);
+		//		USBDRIVE_PrintDouble(gstate.rec_ch[REC_PITCH]);
+		//		USBDRIVE_PrintDouble(gstate.rec_ch[REC_ROLL]);
+		//
+		//		char buf[1] = "\n";
+		//		USBDRIVE_SendBuffer(buf, 1);
+
+
+		if (COM_request_is_available() == TRUE) {
+
+			uint8_t packet_id = COM_an_packet_receive_id();
+
+			if (packet_id == packet_id_request) {
+				unsigned char request_id = 0;
+				if (COM_receive_request_packet(&request_id) == 0) {
+					if (request_id == packet_id_status) {
+						gstate.yaw = 123;
+						gstate.pitch = 1.234;
+						gstate.roll = 0.0001;
+
+						COM_send_status_packet(gstate.yaw, gstate.pitch, gstate.roll,
+								gstate.yaw_d, gstate.pitch_d, gstate.roll_d,
+								gstate.w_x, gstate.w_y, gstate.w_z,
+								gstate.a_x, gstate.a_y, gstate.a_z);
+					}
+				}
+			}
+		}
+
+		//GPIO1_ToggleFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		FRTOS1_vTaskDelay(50/portTICK_RATE_MS);	//Cannot run at more than 16.6 Hz
+	}
+}
+
+int main(void)
+{
+
+	PE_low_level_init();
+
+	if (FRTOS1_xTaskCreate(
+			Task_adcs,  /* pointer to the task */
+			(signed portCHAR *)"Task_adcs", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			2,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+	if (FRTOS1_xTaskCreate(
+			Task_control,  /* pointer to the task */
+			(signed portCHAR *)"Task_control", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			2,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+	if (FRTOS1_xTaskCreate(
+			Task_receiver,  /* pointer to the task */
+			(signed portCHAR *)"Task_receiver", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			1,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+	if (FRTOS1_xTaskCreate(
+			Task_logger,  /* pointer to the task */
+			(signed portCHAR *)"Task_logger", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			tskIDLE_PRIORITY,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+	USBDRIVE_Init();
+
+	gpio1Dev.handle = GPIO1_Init(&gpio1Dev);
+
+#ifdef PEX_RTOS_START
+	PEX_RTOS_START();                  /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
+#endif
+
+	for(;;){
+	}
+
+	return 0;
+}

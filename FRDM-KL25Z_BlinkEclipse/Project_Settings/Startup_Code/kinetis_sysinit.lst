@@ -1,0 +1,1483 @@
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1	@ Tag_ABI_FP_denormal
+   5              		.eabi_attribute 21, 1	@ Tag_ABI_FP_exceptions
+   6              		.eabi_attribute 23, 3	@ Tag_ABI_FP_number_model
+   7              		.eabi_attribute 24, 1	@ Tag_ABI_align8_needed
+   8              		.eabi_attribute 25, 1	@ Tag_ABI_align8_preserved
+   9              		.eabi_attribute 26, 1	@ Tag_ABI_enum_size
+  10              		.eabi_attribute 30, 6	@ Tag_ABI_optimization_goals
+  11              		.eabi_attribute 34, 0	@ Tag_CPU_unaligned_access
+  12              		.eabi_attribute 18, 4	@ Tag_ABI_PCS_wchar_t
+  13              		.file	"kinetis_sysinit.c"
+  14              	@ GNU C11 (GNU Tools for ARM Embedded Processors) version 5.4.1 20160919 (release) [ARM/embedded-5-
+  15              	@	compiled by GNU C version 4.7.4, GMP version 4.3.2, MPFR version 2.4.2, MPC version 0.8.1
+  16              	@ GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+  17              	@ options passed:  -I . -I ./Project_Headers
+  18              	@ -I ./Project_Settings/Startup_Code -imultilib armv6-m
+  19              	@ -iprefix c:\program files (x86)\gnu tools arm embedded\5.4 2016q3\bin\../lib/gcc/arm-none-eabi/5.
+  20              	@ -isysroot c:\program files (x86)\gnu tools arm embedded\5.4 2016q3\bin\../arm-none-eabi
+  21              	@ -MD Project_Settings/Startup_Code/kinetis_sysinit.d
+  22              	@ -MF .dep/kinetis_sysinit.o.d -MP
+  23              	@ -MQ Project_Settings/Startup_Code/kinetis_sysinit.o -D__USES_INITFINI__
+  24              	@ Project_Settings/Startup_Code/kinetis_sysinit.c -mcpu=cortex-m0 -mthumb
+  25              	@ -auxbase-strip Project_Settings/Startup_Code/kinetis_sysinit.o -gdwarf-2
+  26              	@ -O0 -Wall -Wstrict-prototypes -fomit-frame-pointer -fverbose-asm
+  27              	@ options enabled:  -faggressive-loop-optimizations -fauto-inc-dec
+  28              	@ -fchkp-check-incomplete-type -fchkp-check-read -fchkp-check-write
+  29              	@ -fchkp-instrument-calls -fchkp-narrow-bounds -fchkp-optimize
+  30              	@ -fchkp-store-bounds -fchkp-use-static-bounds
+  31              	@ -fchkp-use-static-const-bounds -fchkp-use-wrappers -fcommon
+  32              	@ -fdelete-null-pointer-checks -fdwarf2-cfi-asm -fearly-inlining
+  33              	@ -feliminate-unused-debug-types -ffunction-cse -fgcse-lm -fgnu-runtime
+  34              	@ -fgnu-unique -fident -finline-atomics -fira-hoist-pressure
+  35              	@ -fira-share-save-slots -fira-share-spill-slots -fivopts
+  36              	@ -fkeep-static-consts -fleading-underscore -flifetime-dse
+  37              	@ -flto-odr-type-merging -fmath-errno -fmerge-debug-strings
+  38              	@ -fomit-frame-pointer -fpeephole -fprefetch-loop-arrays
+  39              	@ -freg-struct-return -fsched-critical-path-heuristic
+  40              	@ -fsched-dep-count-heuristic -fsched-group-heuristic -fsched-interblock
+  41              	@ -fsched-last-insn-heuristic -fsched-rank-heuristic -fsched-spec
+  42              	@ -fsched-spec-insn-heuristic -fsched-stalled-insns-dep
+  43              	@ -fsemantic-interposition -fshow-column -fsigned-zeros
+  44              	@ -fsplit-ivs-in-unroller -fstdarg-opt -fstrict-volatile-bitfields
+  45              	@ -fsync-libcalls -ftrapping-math -ftree-coalesce-vars -ftree-cselim
+  46              	@ -ftree-forwprop -ftree-loop-if-convert -ftree-loop-im -ftree-loop-ivcanon
+  47              	@ -ftree-loop-optimize -ftree-parallelize-loops= -ftree-phiprop
+  48              	@ -ftree-reassoc -ftree-scev-cprop -funit-at-a-time -fverbose-asm
+  49              	@ -fzero-initialized-in-bss -mlittle-endian -mpic-data-is-text-relative
+  50              	@ -msched-prolog -mthumb -mvectorize-with-neon-quad
+  51              	
+  52              		.text
+  53              	.Ltext0:
+  54              		.cfi_sections	.debug_frame
+  55              		.align	2
+  56              		.global	Default_Handler
+  57              		.code	16
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 2
+
+
+  58              		.thumb_func
+  59              		.type	Default_Handler, %function
+  60              	Default_Handler:
+  61              	.LFB0:
+  62              		.file 1 "Project_Settings/Startup_Code/kinetis_sysinit.c"
+   1:Project_Settings/Startup_Code/kinetis_sysinit.c **** /*
+   2:Project_Settings/Startup_Code/kinetis_sysinit.c ****  *    kinetis_sysinit.c - Default init routines for Flycatcher
+   3:Project_Settings/Startup_Code/kinetis_sysinit.c ****  *                     		Kinetis ARM systems
+   4:Project_Settings/Startup_Code/kinetis_sysinit.c ****  *    Copyright © 2012 Freescale semiConductor Inc. All Rights Reserved.
+   5:Project_Settings/Startup_Code/kinetis_sysinit.c ****  */
+   6:Project_Settings/Startup_Code/kinetis_sysinit.c ****  
+   7:Project_Settings/Startup_Code/kinetis_sysinit.c **** #include "kinetis_sysinit.h"
+   8:Project_Settings/Startup_Code/kinetis_sysinit.c **** #include "derivative.h"
+   9:Project_Settings/Startup_Code/kinetis_sysinit.c **** 
+  10:Project_Settings/Startup_Code/kinetis_sysinit.c **** /**
+  11:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **===========================================================================
+  12:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **  External declarations
+  13:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **===========================================================================
+  14:Project_Settings/Startup_Code/kinetis_sysinit.c ****  */
+  15:Project_Settings/Startup_Code/kinetis_sysinit.c **** #if __cplusplus
+  16:Project_Settings/Startup_Code/kinetis_sysinit.c **** extern "C" {
+  17:Project_Settings/Startup_Code/kinetis_sysinit.c **** #endif
+  18:Project_Settings/Startup_Code/kinetis_sysinit.c **** extern uint32_t __vector_table[];
+  19:Project_Settings/Startup_Code/kinetis_sysinit.c **** extern unsigned long _estack;
+  20:Project_Settings/Startup_Code/kinetis_sysinit.c **** extern void __thumb_startup(void);
+  21:Project_Settings/Startup_Code/kinetis_sysinit.c **** #if __cplusplus
+  22:Project_Settings/Startup_Code/kinetis_sysinit.c **** }
+  23:Project_Settings/Startup_Code/kinetis_sysinit.c **** #endif
+  24:Project_Settings/Startup_Code/kinetis_sysinit.c **** 
+  25:Project_Settings/Startup_Code/kinetis_sysinit.c **** /**
+  26:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **===========================================================================
+  27:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **  Default interrupt handler
+  28:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **===========================================================================
+  29:Project_Settings/Startup_Code/kinetis_sysinit.c ****  */
+  30:Project_Settings/Startup_Code/kinetis_sysinit.c **** void Default_Handler(void)
+  31:Project_Settings/Startup_Code/kinetis_sysinit.c **** {
+  63              		.loc 1 31 0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		@ link register save eliminated.
+  32:Project_Settings/Startup_Code/kinetis_sysinit.c **** 	__asm("bkpt");
+  68              		.loc 1 32 0
+  69              		.syntax divided
+  70              	@ 32 "Project_Settings/Startup_Code/kinetis_sysinit.c" 1
+  71 0000 00BE     		bkpt
+  72              	@ 0 "" 2
+  33:Project_Settings/Startup_Code/kinetis_sysinit.c **** }
+  73              		.loc 1 33 0
+  74              		.thumb
+  75              		.syntax unified
+  76 0002 C046     		nop
+  77              		@ sp needed	@
+  78 0004 7047     		bx	lr
+  79              		.cfi_endproc
+  80              	.LFE0:
+  81              		.size	Default_Handler, .-Default_Handler
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 3
+
+
+  82              		.weak	PORTD_IRQHandler
+  83              		.thumb_set PORTD_IRQHandler,Default_Handler
+  84              		.weak	PORTA_IRQHandler
+  85              		.thumb_set PORTA_IRQHandler,Default_Handler
+  86              		.weak	LPTimer_IRQHandler
+  87              		.thumb_set LPTimer_IRQHandler,Default_Handler
+  88              		.weak	MCG_IRQHandler
+  89              		.thumb_set MCG_IRQHandler,Default_Handler
+  90              		.weak	TSI0_IRQHandler
+  91              		.thumb_set TSI0_IRQHandler,Default_Handler
+  92              		.weak	DAC0_IRQHandler
+  93              		.thumb_set DAC0_IRQHandler,Default_Handler
+  94              		.weak	USBOTG_IRQHandler
+  95              		.thumb_set USBOTG_IRQHandler,Default_Handler
+  96              		.weak	PIT_IRQHandler
+  97              		.thumb_set PIT_IRQHandler,Default_Handler
+  98              		.weak	RTC_Seconds_IRQHandler
+  99              		.thumb_set RTC_Seconds_IRQHandler,Default_Handler
+ 100              		.weak	RTC_Alarm_IRQHandler
+ 101              		.thumb_set RTC_Alarm_IRQHandler,Default_Handler
+ 102              		.weak	FTM2_IRQHandler
+ 103              		.thumb_set FTM2_IRQHandler,Default_Handler
+ 104              		.weak	FTM1_IRQHandler
+ 105              		.thumb_set FTM1_IRQHandler,Default_Handler
+ 106              		.weak	FTM0_IRQHandler
+ 107              		.thumb_set FTM0_IRQHandler,Default_Handler
+ 108              		.weak	CMP0_IRQHandler
+ 109              		.thumb_set CMP0_IRQHandler,Default_Handler
+ 110              		.weak	ADC0_IRQHandler
+ 111              		.thumb_set ADC0_IRQHandler,Default_Handler
+ 112              		.weak	UART2_IRQHandler
+ 113              		.thumb_set UART2_IRQHandler,Default_Handler
+ 114              		.weak	UART1_IRQHandler
+ 115              		.thumb_set UART1_IRQHandler,Default_Handler
+ 116              		.weak	UART0_IRQHandler
+ 117              		.thumb_set UART0_IRQHandler,Default_Handler
+ 118              		.weak	SPI1_IRQHandler
+ 119              		.thumb_set SPI1_IRQHandler,Default_Handler
+ 120              		.weak	SPI0_IRQHandler
+ 121              		.thumb_set SPI0_IRQHandler,Default_Handler
+ 122              		.weak	I2C1_IRQHandler
+ 123              		.thumb_set I2C1_IRQHandler,Default_Handler
+ 124              		.weak	I2C0_IRQHandler
+ 125              		.thumb_set I2C0_IRQHandler,Default_Handler
+ 126              		.weak	LLW_IRQHandler
+ 127              		.thumb_set LLW_IRQHandler,Default_Handler
+ 128              		.weak	PMC_IRQHandler
+ 129              		.thumb_set PMC_IRQHandler,Default_Handler
+ 130              		.weak	FTFL_IRQHandler
+ 131              		.thumb_set FTFL_IRQHandler,Default_Handler
+ 132              		.weak	MCM_IRQHandler
+ 133              		.thumb_set MCM_IRQHandler,Default_Handler
+ 134              		.weak	DMA3_IRQHandler
+ 135              		.thumb_set DMA3_IRQHandler,Default_Handler
+ 136              		.weak	DMA2_IRQHandler
+ 137              		.thumb_set DMA2_IRQHandler,Default_Handler
+ 138              		.weak	DMA1_IRQHandler
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 4
+
+
+ 139              		.thumb_set DMA1_IRQHandler,Default_Handler
+ 140              		.weak	DMA0_IRQHandler
+ 141              		.thumb_set DMA0_IRQHandler,Default_Handler
+ 142              		.weak	SysTick_Handler
+ 143              		.thumb_set SysTick_Handler,Default_Handler
+ 144              		.weak	PendSV_Handler
+ 145              		.thumb_set PendSV_Handler,Default_Handler
+ 146              		.weak	SVC_Handler
+ 147              		.thumb_set SVC_Handler,Default_Handler
+ 148              		.weak	HardFault_Handler
+ 149              		.thumb_set HardFault_Handler,Default_Handler
+ 150              		.weak	NMI_Handler
+ 151              		.thumb_set NMI_Handler,Default_Handler
+ 152 0006 C046     		.align	2
+ 153              		.global	__init_hardware
+ 154              		.code	16
+ 155              		.thumb_func
+ 156              		.type	__init_hardware, %function
+ 157              	__init_hardware:
+ 158              	.LFB1:
+  34:Project_Settings/Startup_Code/kinetis_sysinit.c **** 
+  35:Project_Settings/Startup_Code/kinetis_sysinit.c **** /**
+  36:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **===========================================================================
+  37:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **  Reset handler
+  38:Project_Settings/Startup_Code/kinetis_sysinit.c ****  **===========================================================================
+  39:Project_Settings/Startup_Code/kinetis_sysinit.c ****  */
+  40:Project_Settings/Startup_Code/kinetis_sysinit.c **** void __init_hardware(void)
+  41:Project_Settings/Startup_Code/kinetis_sysinit.c **** {
+ 159              		.loc 1 41 0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163              		@ link register save eliminated.
+  42:Project_Settings/Startup_Code/kinetis_sysinit.c **** 	SCB_VTOR = (uint32_t)__vector_table; /* Set the interrupt vector table position */
+ 164              		.loc 1 42 0
+ 165 0008 0549     		ldr	r1, .L3	@ D.4848,
+ 166 000a 064B     		ldr	r3, .L3+4	@ D.4849,
+ 167 000c 064A     		ldr	r2, .L3+8	@ tmp113,
+ 168 000e 8B50     		str	r3, [r1, r2]	@ D.4849, _1->VTOR
+  43:Project_Settings/Startup_Code/kinetis_sysinit.c **** 	
+  44:Project_Settings/Startup_Code/kinetis_sysinit.c **** 	// Disable the Watchdog because it may reset the core before entering main().
+  45:Project_Settings/Startup_Code/kinetis_sysinit.c **** 	SIM_COPC = KINETIS_WDOG_DISABLED_CTRL;
+ 169              		.loc 1 45 0
+ 170 0010 064A     		ldr	r2, .L3+12	@ D.4850,
+ 171 0012 8823     		movs	r3, #136	@ tmp116,
+ 172 0014 5B01     		lsls	r3, r3, #5	@ tmp114, tmp116,
+ 173 0016 0021     		movs	r1, #0	@ tmp115,
+ 174 0018 D150     		str	r1, [r2, r3]	@ tmp115, _5->COPC
+  46:Project_Settings/Startup_Code/kinetis_sysinit.c **** }
+ 175              		.loc 1 46 0
+ 176 001a C046     		nop
+ 177              		@ sp needed	@
+ 178 001c 7047     		bx	lr
+ 179              	.L4:
+ 180 001e C046     		.align	2
+ 181              	.L3:
+ 182 0020 00E000E0 		.word	-536813568
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 5
+
+
+ 183 0024 00000000 		.word	__vector_table
+ 184 0028 080D0000 		.word	3336
+ 185 002c 00700440 		.word	1074032640
+ 186              		.cfi_endproc
+ 187              	.LFE1:
+ 188              		.size	__init_hardware, .-__init_hardware
+ 189              		.global	InterruptVector
+ 190              		.section	.vectortable,"a",%progbits
+ 191              		.align	2
+ 192              		.type	InterruptVector, %object
+ 193              		.size	InterruptVector, 192
+ 194              	InterruptVector:
+ 195 0000 00000000 		.word	_estack
+ 196 0004 00000000 		.word	__thumb_startup
+ 197 0008 00000000 		.word	NMI_Handler
+ 198 000c 00000000 		.word	HardFault_Handler
+ 199 0010 00000000 		.word	0
+ 200 0014 00000000 		.word	0
+ 201 0018 00000000 		.word	0
+ 202 001c 00000000 		.word	0
+ 203 0020 00000000 		.word	0
+ 204 0024 00000000 		.word	0
+ 205 0028 00000000 		.word	0
+ 206 002c 00000000 		.word	SVC_Handler
+ 207 0030 00000000 		.word	0
+ 208 0034 00000000 		.word	0
+ 209 0038 00000000 		.word	PendSV_Handler
+ 210 003c 00000000 		.word	SysTick_Handler
+ 211 0040 00000000 		.word	DMA0_IRQHandler
+ 212 0044 00000000 		.word	DMA1_IRQHandler
+ 213 0048 00000000 		.word	DMA2_IRQHandler
+ 214 004c 00000000 		.word	DMA3_IRQHandler
+ 215 0050 00000000 		.word	MCM_IRQHandler
+ 216 0054 00000000 		.word	FTFL_IRQHandler
+ 217 0058 00000000 		.word	PMC_IRQHandler
+ 218 005c 00000000 		.word	LLW_IRQHandler
+ 219 0060 00000000 		.word	I2C0_IRQHandler
+ 220 0064 00000000 		.word	I2C1_IRQHandler
+ 221 0068 00000000 		.word	SPI0_IRQHandler
+ 222 006c 00000000 		.word	SPI1_IRQHandler
+ 223 0070 00000000 		.word	UART0_IRQHandler
+ 224 0074 00000000 		.word	UART1_IRQHandler
+ 225 0078 00000000 		.word	UART2_IRQHandler
+ 226 007c 00000000 		.word	ADC0_IRQHandler
+ 227 0080 00000000 		.word	CMP0_IRQHandler
+ 228 0084 00000000 		.word	FTM0_IRQHandler
+ 229 0088 00000000 		.word	FTM1_IRQHandler
+ 230 008c 00000000 		.word	FTM2_IRQHandler
+ 231 0090 00000000 		.word	RTC_Alarm_IRQHandler
+ 232 0094 00000000 		.word	RTC_Seconds_IRQHandler
+ 233 0098 00000000 		.word	PIT_IRQHandler
+ 234 009c 00000000 		.word	Default_Handler
+ 235 00a0 00000000 		.word	USBOTG_IRQHandler
+ 236 00a4 00000000 		.word	DAC0_IRQHandler
+ 237 00a8 00000000 		.word	TSI0_IRQHandler
+ 238 00ac 00000000 		.word	MCG_IRQHandler
+ 239 00b0 00000000 		.word	LPTimer_IRQHandler
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 6
+
+
+ 240 00b4 00000000 		.word	Default_Handler
+ 241 00b8 00000000 		.word	PORTA_IRQHandler
+ 242 00bc 00000000 		.word	PORTD_IRQHandler
+ 243              		.text
+ 244              	.Letext0:
+ 245              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\5.4 2016q3\\arm-none-eabi\\include\\mach
+ 246              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\5.4 2016q3\\arm-none-eabi\\include\\sys\
+ 247              		.file 4 "./Project_Headers/MKL25Z4.h"
+ 248              		.section	.debug_info,"",%progbits
+ 249              	.Ldebug_info0:
+ 250 0000 66040000 		.4byte	0x466
+ 251 0004 0200     		.2byte	0x2
+ 252 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 253 000a 04       		.byte	0x4
+ 254 000b 01       		.uleb128 0x1
+ 255 000c 7E020000 		.4byte	.LASF59
+ 256 0010 0C       		.byte	0xc
+ 257 0011 44000000 		.4byte	.LASF60
+ 258 0015 0F010000 		.4byte	.LASF61
+ 259 0019 00000000 		.4byte	.Ltext0
+ 260 001d 30000000 		.4byte	.Letext0
+ 261 0021 00000000 		.4byte	.Ldebug_line0
+ 262 0025 02       		.uleb128 0x2
+ 263 0026 01       		.byte	0x1
+ 264 0027 06       		.byte	0x6
+ 265 0028 74010000 		.4byte	.LASF0
+ 266 002c 03       		.uleb128 0x3
+ 267 002d 02030000 		.4byte	.LASF5
+ 268 0031 02       		.byte	0x2
+ 269 0032 1D       		.byte	0x1d
+ 270 0033 37000000 		.4byte	0x37
+ 271 0037 02       		.uleb128 0x2
+ 272 0038 01       		.byte	0x1
+ 273 0039 08       		.byte	0x8
+ 274 003a 61010000 		.4byte	.LASF1
+ 275 003e 02       		.uleb128 0x2
+ 276 003f 02       		.byte	0x2
+ 277 0040 05       		.byte	0x5
+ 278 0041 17000000 		.4byte	.LASF2
+ 279 0045 02       		.uleb128 0x2
+ 280 0046 02       		.byte	0x2
+ 281 0047 07       		.byte	0x7
+ 282 0048 B3010000 		.4byte	.LASF3
+ 283 004c 02       		.uleb128 0x2
+ 284 004d 04       		.byte	0x4
+ 285 004e 05       		.byte	0x5
+ 286 004f D2000000 		.4byte	.LASF4
+ 287 0053 03       		.uleb128 0x3
+ 288 0054 51020000 		.4byte	.LASF6
+ 289 0058 02       		.byte	0x2
+ 290 0059 41       		.byte	0x41
+ 291 005a 5E000000 		.4byte	0x5e
+ 292 005e 02       		.uleb128 0x2
+ 293 005f 04       		.byte	0x4
+ 294 0060 07       		.byte	0x7
+ 295 0061 FD010000 		.4byte	.LASF7
+ 296 0065 02       		.uleb128 0x2
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 7
+
+
+ 297 0066 08       		.byte	0x8
+ 298 0067 05       		.byte	0x5
+ 299 0068 B5000000 		.4byte	.LASF8
+ 300 006c 02       		.uleb128 0x2
+ 301 006d 08       		.byte	0x8
+ 302 006e 07       		.byte	0x7
+ 303 006f 80010000 		.4byte	.LASF9
+ 304 0073 04       		.uleb128 0x4
+ 305 0074 04       		.byte	0x4
+ 306 0075 05       		.byte	0x5
+ 307 0076 696E7400 		.ascii	"int\000"
+ 308 007a 02       		.uleb128 0x2
+ 309 007b 04       		.byte	0x4
+ 310 007c 07       		.byte	0x7
+ 311 007d A0010000 		.4byte	.LASF10
+ 312 0081 03       		.uleb128 0x3
+ 313 0082 74000000 		.4byte	.LASF11
+ 314 0086 03       		.byte	0x3
+ 315 0087 18       		.byte	0x18
+ 316 0088 2C000000 		.4byte	0x2c
+ 317 008c 03       		.uleb128 0x3
+ 318 008d 97010000 		.4byte	.LASF12
+ 319 0091 03       		.byte	0x3
+ 320 0092 30       		.byte	0x30
+ 321 0093 53000000 		.4byte	0x53
+ 322 0097 02       		.uleb128 0x2
+ 323 0098 04       		.byte	0x4
+ 324 0099 07       		.byte	0x7
+ 325 009a 27000000 		.4byte	.LASF13
+ 326 009e 05       		.uleb128 0x5
+ 327 009f 81000000 		.4byte	0x81
+ 328 00a3 AE000000 		.4byte	0xae
+ 329 00a7 06       		.uleb128 0x6
+ 330 00a8 97000000 		.4byte	0x97
+ 331 00ac 03       		.byte	0x3
+ 332 00ad 00       		.byte	0
+ 333 00ae 05       		.uleb128 0x5
+ 334 00af 81000000 		.4byte	0x81
+ 335 00b3 BE000000 		.4byte	0xbe
+ 336 00b7 06       		.uleb128 0x6
+ 337 00b8 97000000 		.4byte	0x97
+ 338 00bc 07       		.byte	0x7
+ 339 00bd 00       		.byte	0
+ 340 00be 05       		.uleb128 0x5
+ 341 00bf 81000000 		.4byte	0x81
+ 342 00c3 CE000000 		.4byte	0xce
+ 343 00c7 06       		.uleb128 0x6
+ 344 00c8 97000000 		.4byte	0x97
+ 345 00cc 9B       		.byte	0x9b
+ 346 00cd 00       		.byte	0
+ 347 00ce 07       		.uleb128 0x7
+ 348 00cf 8C000000 		.4byte	.LASF28
+ 349 00d3 340D     		.2byte	0xd34
+ 350 00d5 04       		.byte	0x4
+ 351 00d6 8E12     		.2byte	0x128e
+ 352 00d8 CA010000 		.4byte	0x1ca
+ 353 00dc 08       		.uleb128 0x8
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 8
+
+
+ 354 00dd 1A020000 		.4byte	.LASF14
+ 355 00e1 04       		.byte	0x4
+ 356 00e2 8F12     		.2byte	0x128f
+ 357 00e4 AE000000 		.4byte	0xae
+ 358 00e8 02       		.byte	0x2
+ 359 00e9 23       		.byte	0x23
+ 360 00ea 00       		.uleb128 0
+ 361 00eb 08       		.uleb128 0x8
+ 362 00ec 21000000 		.4byte	.LASF15
+ 363 00f0 04       		.byte	0x4
+ 364 00f1 9012     		.2byte	0x1290
+ 365 00f3 8C000000 		.4byte	0x8c
+ 366 00f7 02       		.byte	0x2
+ 367 00f8 23       		.byte	0x23
+ 368 00f9 08       		.uleb128 0x8
+ 369 00fa 08       		.uleb128 0x8
+ 370 00fb 25020000 		.4byte	.LASF16
+ 371 00ff 04       		.byte	0x4
+ 372 0100 9112     		.2byte	0x1291
+ 373 0102 CA010000 		.4byte	0x1ca
+ 374 0106 02       		.byte	0x2
+ 375 0107 23       		.byte	0x23
+ 376 0108 0C       		.uleb128 0xc
+ 377 0109 08       		.uleb128 0x8
+ 378 010a 3E000000 		.4byte	.LASF17
+ 379 010e 04       		.byte	0x4
+ 380 010f 9212     		.2byte	0x1292
+ 381 0111 8C000000 		.4byte	0x8c
+ 382 0115 03       		.byte	0x3
+ 383 0116 23       		.byte	0x23
+ 384 0117 801A     		.uleb128 0xd00
+ 385 0119 08       		.uleb128 0x8
+ 386 011a B0000000 		.4byte	.LASF18
+ 387 011e 04       		.byte	0x4
+ 388 011f 9312     		.2byte	0x1293
+ 389 0121 8C000000 		.4byte	0x8c
+ 390 0125 03       		.byte	0x3
+ 391 0126 23       		.byte	0x23
+ 392 0127 841A     		.uleb128 0xd04
+ 393 0129 08       		.uleb128 0x8
+ 394 012a E2010000 		.4byte	.LASF19
+ 395 012e 04       		.byte	0x4
+ 396 012f 9412     		.2byte	0x1294
+ 397 0131 8C000000 		.4byte	0x8c
+ 398 0135 03       		.byte	0x3
+ 399 0136 23       		.byte	0x23
+ 400 0137 881A     		.uleb128 0xd08
+ 401 0139 08       		.uleb128 0x8
+ 402 013a 5B010000 		.4byte	.LASF20
+ 403 013e 04       		.byte	0x4
+ 404 013f 9512     		.2byte	0x1295
+ 405 0141 8C000000 		.4byte	0x8c
+ 406 0145 03       		.byte	0x3
+ 407 0146 23       		.byte	0x23
+ 408 0147 8C1A     		.uleb128 0xd0c
+ 409 0149 09       		.uleb128 0x9
+ 410 014a 53435200 		.ascii	"SCR\000"
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 9
+
+
+ 411 014e 04       		.byte	0x4
+ 412 014f 9612     		.2byte	0x1296
+ 413 0151 8C000000 		.4byte	0x8c
+ 414 0155 03       		.byte	0x3
+ 415 0156 23       		.byte	0x23
+ 416 0157 901A     		.uleb128 0xd10
+ 417 0159 09       		.uleb128 0x9
+ 418 015a 43435200 		.ascii	"CCR\000"
+ 419 015e 04       		.byte	0x4
+ 420 015f 9712     		.2byte	0x1297
+ 421 0161 8C000000 		.4byte	0x8c
+ 422 0165 03       		.byte	0x3
+ 423 0166 23       		.byte	0x23
+ 424 0167 941A     		.uleb128 0xd14
+ 425 0169 08       		.uleb128 0x8
+ 426 016a 30020000 		.4byte	.LASF21
+ 427 016e 04       		.byte	0x4
+ 428 016f 9812     		.2byte	0x1298
+ 429 0171 9E000000 		.4byte	0x9e
+ 430 0175 03       		.byte	0x3
+ 431 0176 23       		.byte	0x23
+ 432 0177 981A     		.uleb128 0xd18
+ 433 0179 08       		.uleb128 0x8
+ 434 017a CC010000 		.4byte	.LASF22
+ 435 017e 04       		.byte	0x4
+ 436 017f 9912     		.2byte	0x1299
+ 437 0181 8C000000 		.4byte	0x8c
+ 438 0185 03       		.byte	0x3
+ 439 0186 23       		.byte	0x23
+ 440 0187 9C1A     		.uleb128 0xd1c
+ 441 0189 08       		.uleb128 0x8
+ 442 018a C6010000 		.4byte	.LASF23
+ 443 018e 04       		.byte	0x4
+ 444 018f 9A12     		.2byte	0x129a
+ 445 0191 8C000000 		.4byte	0x8c
+ 446 0195 03       		.byte	0x3
+ 447 0196 23       		.byte	0x23
+ 448 0197 A01A     		.uleb128 0xd20
+ 449 0199 08       		.uleb128 0x8
+ 450 019a AD010000 		.4byte	.LASF24
+ 451 019e 04       		.byte	0x4
+ 452 019f 9B12     		.2byte	0x129b
+ 453 01a1 8C000000 		.4byte	0x8c
+ 454 01a5 03       		.byte	0x3
+ 455 01a6 23       		.byte	0x23
+ 456 01a7 A41A     		.uleb128 0xd24
+ 457 01a9 08       		.uleb128 0x8
+ 458 01aa 3B020000 		.4byte	.LASF25
+ 459 01ae 04       		.byte	0x4
+ 460 01af 9C12     		.2byte	0x129c
+ 461 01b1 AE000000 		.4byte	0xae
+ 462 01b5 03       		.byte	0x3
+ 463 01b6 23       		.byte	0x23
+ 464 01b7 A81A     		.uleb128 0xd28
+ 465 01b9 08       		.uleb128 0x8
+ 466 01ba E7010000 		.4byte	.LASF26
+ 467 01be 04       		.byte	0x4
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 10
+
+
+ 468 01bf 9D12     		.2byte	0x129d
+ 469 01c1 8C000000 		.4byte	0x8c
+ 470 01c5 03       		.byte	0x3
+ 471 01c6 23       		.byte	0x23
+ 472 01c7 B01A     		.uleb128 0xd30
+ 473 01c9 00       		.byte	0
+ 474 01ca 05       		.uleb128 0x5
+ 475 01cb 81000000 		.4byte	0x81
+ 476 01cf DB010000 		.4byte	0x1db
+ 477 01d3 0A       		.uleb128 0xa
+ 478 01d4 97000000 		.4byte	0x97
+ 479 01d8 F30C     		.2byte	0xcf3
+ 480 01da 00       		.byte	0
+ 481 01db 0B       		.uleb128 0xb
+ 482 01dc 30000000 		.4byte	.LASF27
+ 483 01e0 04       		.byte	0x4
+ 484 01e1 9E12     		.2byte	0x129e
+ 485 01e3 E7010000 		.4byte	0x1e7
+ 486 01e7 0C       		.uleb128 0xc
+ 487 01e8 04       		.byte	0x4
+ 488 01e9 ED010000 		.4byte	0x1ed
+ 489 01ed 0D       		.uleb128 0xd
+ 490 01ee CE000000 		.4byte	0xce
+ 491 01f2 07       		.uleb128 0x7
+ 492 01f3 0F020000 		.4byte	.LASF29
+ 493 01f7 0811     		.2byte	0x1108
+ 494 01f9 04       		.byte	0x4
+ 495 01fa 5013     		.2byte	0x1350
+ 496 01fc AE030000 		.4byte	0x3ae
+ 497 0200 08       		.uleb128 0x8
+ 498 0201 EC010000 		.4byte	.LASF30
+ 499 0205 04       		.byte	0x4
+ 500 0206 5113     		.2byte	0x1351
+ 501 0208 8C000000 		.4byte	0x8c
+ 502 020c 02       		.byte	0x2
+ 503 020d 23       		.byte	0x23
+ 504 020e 00       		.uleb128 0
+ 505 020f 08       		.uleb128 0x8
+ 506 0210 E3000000 		.4byte	.LASF31
+ 507 0214 04       		.byte	0x4
+ 508 0215 5213     		.2byte	0x1352
+ 509 0217 8C000000 		.4byte	0x8c
+ 510 021b 02       		.byte	0x2
+ 511 021c 23       		.byte	0x23
+ 512 021d 04       		.uleb128 0x4
+ 513 021e 08       		.uleb128 0x8
+ 514 021f 1A020000 		.4byte	.LASF14
+ 515 0223 04       		.byte	0x4
+ 516 0224 5313     		.2byte	0x1353
+ 517 0226 AE030000 		.4byte	0x3ae
+ 518 022a 02       		.byte	0x2
+ 519 022b 23       		.byte	0x23
+ 520 022c 08       		.uleb128 0x8
+ 521 022d 08       		.uleb128 0x8
+ 522 022e 0C030000 		.4byte	.LASF32
+ 523 0232 04       		.byte	0x4
+ 524 0233 5413     		.2byte	0x1354
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 11
+
+
+ 525 0235 8C000000 		.4byte	0x8c
+ 526 0239 03       		.byte	0x3
+ 527 023a 23       		.byte	0x23
+ 528 023b 8420     		.uleb128 0x1004
+ 529 023d 08       		.uleb128 0x8
+ 530 023e 25020000 		.4byte	.LASF16
+ 531 0242 04       		.byte	0x4
+ 532 0243 5513     		.2byte	0x1355
+ 533 0245 9E000000 		.4byte	0x9e
+ 534 0249 03       		.byte	0x3
+ 535 024a 23       		.byte	0x23
+ 536 024b 8820     		.uleb128 0x1008
+ 537 024d 08       		.uleb128 0x8
+ 538 024e 12030000 		.4byte	.LASF33
+ 539 0252 04       		.byte	0x4
+ 540 0253 5613     		.2byte	0x1356
+ 541 0255 8C000000 		.4byte	0x8c
+ 542 0259 03       		.byte	0x3
+ 543 025a 23       		.byte	0x23
+ 544 025b 8C20     		.uleb128 0x100c
+ 545 025d 08       		.uleb128 0x8
+ 546 025e 00000000 		.4byte	.LASF34
+ 547 0262 04       		.byte	0x4
+ 548 0263 5713     		.2byte	0x1357
+ 549 0265 8C000000 		.4byte	0x8c
+ 550 0269 03       		.byte	0x3
+ 551 026a 23       		.byte	0x23
+ 552 026b 9020     		.uleb128 0x1010
+ 553 026d 08       		.uleb128 0x8
+ 554 026e 30020000 		.4byte	.LASF21
+ 555 0272 04       		.byte	0x4
+ 556 0273 5813     		.2byte	0x1358
+ 557 0275 9E000000 		.4byte	0x9e
+ 558 0279 03       		.byte	0x3
+ 559 027a 23       		.byte	0x23
+ 560 027b 9420     		.uleb128 0x1014
+ 561 027d 08       		.uleb128 0x8
+ 562 027e 4D010000 		.4byte	.LASF35
+ 563 0282 04       		.byte	0x4
+ 564 0283 5913     		.2byte	0x1359
+ 565 0285 8C000000 		.4byte	0x8c
+ 566 0289 03       		.byte	0x3
+ 567 028a 23       		.byte	0x23
+ 568 028b 9820     		.uleb128 0x1018
+ 569 028d 08       		.uleb128 0x8
+ 570 028e 3B020000 		.4byte	.LASF25
+ 571 0292 04       		.byte	0x4
+ 572 0293 5A13     		.2byte	0x135a
+ 573 0295 AE000000 		.4byte	0xae
+ 574 0299 03       		.byte	0x3
+ 575 029a 23       		.byte	0x23
+ 576 029b 9C20     		.uleb128 0x101c
+ 577 029d 08       		.uleb128 0x8
+ 578 029e 12000000 		.4byte	.LASF36
+ 579 02a2 04       		.byte	0x4
+ 580 02a3 5B13     		.2byte	0x135b
+ 581 02a5 8C000000 		.4byte	0x8c
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 12
+
+
+ 582 02a9 03       		.byte	0x3
+ 583 02aa 23       		.byte	0x23
+ 584 02ab A420     		.uleb128 0x1024
+ 585 02ad 08       		.uleb128 0x8
+ 586 02ae 46020000 		.4byte	.LASF37
+ 587 02b2 04       		.byte	0x4
+ 588 02b3 5C13     		.2byte	0x135c
+ 589 02b5 BF030000 		.4byte	0x3bf
+ 590 02b9 03       		.byte	0x3
+ 591 02ba 23       		.byte	0x23
+ 592 02bb A820     		.uleb128 0x1028
+ 593 02bd 08       		.uleb128 0x8
+ 594 02be EC000000 		.4byte	.LASF38
+ 595 02c2 04       		.byte	0x4
+ 596 02c3 5D13     		.2byte	0x135d
+ 597 02c5 8C000000 		.4byte	0x8c
+ 598 02c9 03       		.byte	0x3
+ 599 02ca 23       		.byte	0x23
+ 600 02cb B420     		.uleb128 0x1034
+ 601 02cd 08       		.uleb128 0x8
+ 602 02ce F2000000 		.4byte	.LASF39
+ 603 02d2 04       		.byte	0x4
+ 604 02d3 5E13     		.2byte	0x135e
+ 605 02d5 8C000000 		.4byte	0x8c
+ 606 02d9 03       		.byte	0x3
+ 607 02da 23       		.byte	0x23
+ 608 02db B820     		.uleb128 0x1038
+ 609 02dd 08       		.uleb128 0x8
+ 610 02de F8000000 		.4byte	.LASF40
+ 611 02e2 04       		.byte	0x4
+ 612 02e3 5F13     		.2byte	0x135f
+ 613 02e5 8C000000 		.4byte	0x8c
+ 614 02e9 03       		.byte	0x3
+ 615 02ea 23       		.byte	0x23
+ 616 02eb BC20     		.uleb128 0x103c
+ 617 02ed 08       		.uleb128 0x8
+ 618 02ee FE000000 		.4byte	.LASF41
+ 619 02f2 04       		.byte	0x4
+ 620 02f3 6013     		.2byte	0x1360
+ 621 02f5 8C000000 		.4byte	0x8c
+ 622 02f9 03       		.byte	0x3
+ 623 02fa 23       		.byte	0x23
+ 624 02fb C020     		.uleb128 0x1040
+ 625 02fd 08       		.uleb128 0x8
+ 626 02fe 53010000 		.4byte	.LASF42
+ 627 0302 04       		.byte	0x4
+ 628 0303 6113     		.2byte	0x1361
+ 629 0305 8C000000 		.4byte	0x8c
+ 630 0309 03       		.byte	0x3
+ 631 030a 23       		.byte	0x23
+ 632 030b C420     		.uleb128 0x1044
+ 633 030d 08       		.uleb128 0x8
+ 634 030e A5000000 		.4byte	.LASF43
+ 635 0312 04       		.byte	0x4
+ 636 0313 6213     		.2byte	0x1362
+ 637 0315 9E000000 		.4byte	0x9e
+ 638 0319 03       		.byte	0x3
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 13
+
+
+ 639 031a 23       		.byte	0x23
+ 640 031b C820     		.uleb128 0x1048
+ 641 031d 08       		.uleb128 0x8
+ 642 031e 06000000 		.4byte	.LASF44
+ 643 0322 04       		.byte	0x4
+ 644 0323 6313     		.2byte	0x1363
+ 645 0325 8C000000 		.4byte	0x8c
+ 646 0329 03       		.byte	0x3
+ 647 032a 23       		.byte	0x23
+ 648 032b CC20     		.uleb128 0x104c
+ 649 032d 08       		.uleb128 0x8
+ 650 032e 0C000000 		.4byte	.LASF45
+ 651 0332 04       		.byte	0x4
+ 652 0333 6413     		.2byte	0x1364
+ 653 0335 8C000000 		.4byte	0x8c
+ 654 0339 03       		.byte	0x3
+ 655 033a 23       		.byte	0x23
+ 656 033b D020     		.uleb128 0x1050
+ 657 033d 08       		.uleb128 0x8
+ 658 033e 5C020000 		.4byte	.LASF46
+ 659 0342 04       		.byte	0x4
+ 660 0343 6513     		.2byte	0x1365
+ 661 0345 9E000000 		.4byte	0x9e
+ 662 0349 03       		.byte	0x3
+ 663 034a 23       		.byte	0x23
+ 664 034b D420     		.uleb128 0x1054
+ 665 034d 08       		.uleb128 0x8
+ 666 034e F7010000 		.4byte	.LASF47
+ 667 0352 04       		.byte	0x4
+ 668 0353 6613     		.2byte	0x1366
+ 669 0355 8C000000 		.4byte	0x8c
+ 670 0359 03       		.byte	0x3
+ 671 035a 23       		.byte	0x23
+ 672 035b D820     		.uleb128 0x1058
+ 673 035d 08       		.uleb128 0x8
+ 674 035e 47010000 		.4byte	.LASF48
+ 675 0362 04       		.byte	0x4
+ 676 0363 6713     		.2byte	0x1367
+ 677 0365 8C000000 		.4byte	0x8c
+ 678 0369 03       		.byte	0x3
+ 679 036a 23       		.byte	0x23
+ 680 036b DC20     		.uleb128 0x105c
+ 681 036d 08       		.uleb128 0x8
+ 682 036e F2010000 		.4byte	.LASF49
+ 683 0372 04       		.byte	0x4
+ 684 0373 6813     		.2byte	0x1368
+ 685 0375 8C000000 		.4byte	0x8c
+ 686 0379 03       		.byte	0x3
+ 687 037a 23       		.byte	0x23
+ 688 037b E020     		.uleb128 0x1060
+ 689 037d 08       		.uleb128 0x8
+ 690 037e 04010000 		.4byte	.LASF50
+ 691 0382 04       		.byte	0x4
+ 692 0383 6913     		.2byte	0x1369
+ 693 0385 BE000000 		.4byte	0xbe
+ 694 0389 03       		.byte	0x3
+ 695 038a 23       		.byte	0x23
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 14
+
+
+ 696 038b E420     		.uleb128 0x1064
+ 697 038d 08       		.uleb128 0x8
+ 698 038e 6F010000 		.4byte	.LASF51
+ 699 0392 04       		.byte	0x4
+ 700 0393 6A13     		.2byte	0x136a
+ 701 0395 8C000000 		.4byte	0x8c
+ 702 0399 03       		.byte	0x3
+ 703 039a 23       		.byte	0x23
+ 704 039b 8022     		.uleb128 0x1100
+ 705 039d 08       		.uleb128 0x8
+ 706 039e 67020000 		.4byte	.LASF52
+ 707 03a2 04       		.byte	0x4
+ 708 03a3 6B13     		.2byte	0x136b
+ 709 03a5 8C000000 		.4byte	0x8c
+ 710 03a9 03       		.byte	0x3
+ 711 03aa 23       		.byte	0x23
+ 712 03ab 8422     		.uleb128 0x1104
+ 713 03ad 00       		.byte	0
+ 714 03ae 05       		.uleb128 0x5
+ 715 03af 81000000 		.4byte	0x81
+ 716 03b3 BF030000 		.4byte	0x3bf
+ 717 03b7 0A       		.uleb128 0xa
+ 718 03b8 97000000 		.4byte	0x97
+ 719 03bc FB0F     		.2byte	0xffb
+ 720 03be 00       		.byte	0
+ 721 03bf 05       		.uleb128 0x5
+ 722 03c0 81000000 		.4byte	0x81
+ 723 03c4 CF030000 		.4byte	0x3cf
+ 724 03c8 06       		.uleb128 0x6
+ 725 03c9 97000000 		.4byte	0x97
+ 726 03cd 0B       		.byte	0xb
+ 727 03ce 00       		.byte	0
+ 728 03cf 0B       		.uleb128 0xb
+ 729 03d0 97000000 		.4byte	.LASF53
+ 730 03d4 04       		.byte	0x4
+ 731 03d5 6C13     		.2byte	0x136c
+ 732 03d7 DB030000 		.4byte	0x3db
+ 733 03db 0C       		.uleb128 0xc
+ 734 03dc 04       		.byte	0x4
+ 735 03dd E1030000 		.4byte	0x3e1
+ 736 03e1 0D       		.uleb128 0xd
+ 737 03e2 F2010000 		.4byte	0x1f2
+ 738 03e6 0E       		.uleb128 0xe
+ 739 03e7 01       		.byte	0x1
+ 740 03e8 D2010000 		.4byte	.LASF54
+ 741 03ec 01       		.byte	0x1
+ 742 03ed 1E       		.byte	0x1e
+ 743 03ee 01       		.byte	0x1
+ 744 03ef 00000000 		.4byte	.LFB0
+ 745 03f3 06000000 		.4byte	.LFE0
+ 746 03f7 02       		.byte	0x2
+ 747 03f8 7D       		.byte	0x7d
+ 748 03f9 00       		.sleb128 0
+ 749 03fa 01       		.byte	0x1
+ 750 03fb 0E       		.uleb128 0xe
+ 751 03fc 01       		.byte	0x1
+ 752 03fd 7C000000 		.4byte	.LASF55
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 15
+
+
+ 753 0401 01       		.byte	0x1
+ 754 0402 28       		.byte	0x28
+ 755 0403 01       		.byte	0x1
+ 756 0404 08000000 		.4byte	.LFB1
+ 757 0408 30000000 		.4byte	.LFE1
+ 758 040c 02       		.byte	0x2
+ 759 040d 7D       		.byte	0x7d
+ 760 040e 00       		.sleb128 0
+ 761 040f 01       		.byte	0x1
+ 762 0410 05       		.uleb128 0x5
+ 763 0411 8C000000 		.4byte	0x8c
+ 764 0415 1B040000 		.4byte	0x41b
+ 765 0419 0F       		.uleb128 0xf
+ 766 041a 00       		.byte	0
+ 767 041b 10       		.uleb128 0x10
+ 768 041c C3000000 		.4byte	.LASF56
+ 769 0420 01       		.byte	0x1
+ 770 0421 12       		.byte	0x12
+ 771 0422 10040000 		.4byte	0x410
+ 772 0426 01       		.byte	0x1
+ 773 0427 01       		.byte	0x1
+ 774 0428 10       		.uleb128 0x10
+ 775 0429 DB000000 		.4byte	.LASF57
+ 776 042d 01       		.byte	0x1
+ 777 042e 13       		.byte	0x13
+ 778 042f 5E000000 		.4byte	0x5e
+ 779 0433 01       		.byte	0x1
+ 780 0434 01       		.byte	0x1
+ 781 0435 05       		.uleb128 0x5
+ 782 0436 4D040000 		.4byte	0x44d
+ 783 043a 45040000 		.4byte	0x445
+ 784 043e 06       		.uleb128 0x6
+ 785 043f 97000000 		.4byte	0x97
+ 786 0443 2F       		.byte	0x2f
+ 787 0444 00       		.byte	0
+ 788 0445 0C       		.uleb128 0xc
+ 789 0446 04       		.byte	0x4
+ 790 0447 4B040000 		.4byte	0x44b
+ 791 044b 11       		.uleb128 0x11
+ 792 044c 01       		.byte	0x1
+ 793 044d 12       		.uleb128 0x12
+ 794 044e 45040000 		.4byte	0x445
+ 795 0452 13       		.uleb128 0x13
+ 796 0453 6E020000 		.4byte	.LASF58
+ 797 0457 01       		.byte	0x1
+ 798 0458 57       		.byte	0x57
+ 799 0459 64040000 		.4byte	0x464
+ 800 045d 01       		.byte	0x1
+ 801 045e 05       		.byte	0x5
+ 802 045f 03       		.byte	0x3
+ 803 0460 00000000 		.4byte	InterruptVector
+ 804 0464 12       		.uleb128 0x12
+ 805 0465 35040000 		.4byte	0x435
+ 806 0469 00       		.byte	0
+ 807              		.section	.debug_abbrev,"",%progbits
+ 808              	.Ldebug_abbrev0:
+ 809 0000 01       		.uleb128 0x1
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 16
+
+
+ 810 0001 11       		.uleb128 0x11
+ 811 0002 01       		.byte	0x1
+ 812 0003 25       		.uleb128 0x25
+ 813 0004 0E       		.uleb128 0xe
+ 814 0005 13       		.uleb128 0x13
+ 815 0006 0B       		.uleb128 0xb
+ 816 0007 03       		.uleb128 0x3
+ 817 0008 0E       		.uleb128 0xe
+ 818 0009 1B       		.uleb128 0x1b
+ 819 000a 0E       		.uleb128 0xe
+ 820 000b 11       		.uleb128 0x11
+ 821 000c 01       		.uleb128 0x1
+ 822 000d 12       		.uleb128 0x12
+ 823 000e 01       		.uleb128 0x1
+ 824 000f 10       		.uleb128 0x10
+ 825 0010 06       		.uleb128 0x6
+ 826 0011 00       		.byte	0
+ 827 0012 00       		.byte	0
+ 828 0013 02       		.uleb128 0x2
+ 829 0014 24       		.uleb128 0x24
+ 830 0015 00       		.byte	0
+ 831 0016 0B       		.uleb128 0xb
+ 832 0017 0B       		.uleb128 0xb
+ 833 0018 3E       		.uleb128 0x3e
+ 834 0019 0B       		.uleb128 0xb
+ 835 001a 03       		.uleb128 0x3
+ 836 001b 0E       		.uleb128 0xe
+ 837 001c 00       		.byte	0
+ 838 001d 00       		.byte	0
+ 839 001e 03       		.uleb128 0x3
+ 840 001f 16       		.uleb128 0x16
+ 841 0020 00       		.byte	0
+ 842 0021 03       		.uleb128 0x3
+ 843 0022 0E       		.uleb128 0xe
+ 844 0023 3A       		.uleb128 0x3a
+ 845 0024 0B       		.uleb128 0xb
+ 846 0025 3B       		.uleb128 0x3b
+ 847 0026 0B       		.uleb128 0xb
+ 848 0027 49       		.uleb128 0x49
+ 849 0028 13       		.uleb128 0x13
+ 850 0029 00       		.byte	0
+ 851 002a 00       		.byte	0
+ 852 002b 04       		.uleb128 0x4
+ 853 002c 24       		.uleb128 0x24
+ 854 002d 00       		.byte	0
+ 855 002e 0B       		.uleb128 0xb
+ 856 002f 0B       		.uleb128 0xb
+ 857 0030 3E       		.uleb128 0x3e
+ 858 0031 0B       		.uleb128 0xb
+ 859 0032 03       		.uleb128 0x3
+ 860 0033 08       		.uleb128 0x8
+ 861 0034 00       		.byte	0
+ 862 0035 00       		.byte	0
+ 863 0036 05       		.uleb128 0x5
+ 864 0037 01       		.uleb128 0x1
+ 865 0038 01       		.byte	0x1
+ 866 0039 49       		.uleb128 0x49
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 17
+
+
+ 867 003a 13       		.uleb128 0x13
+ 868 003b 01       		.uleb128 0x1
+ 869 003c 13       		.uleb128 0x13
+ 870 003d 00       		.byte	0
+ 871 003e 00       		.byte	0
+ 872 003f 06       		.uleb128 0x6
+ 873 0040 21       		.uleb128 0x21
+ 874 0041 00       		.byte	0
+ 875 0042 49       		.uleb128 0x49
+ 876 0043 13       		.uleb128 0x13
+ 877 0044 2F       		.uleb128 0x2f
+ 878 0045 0B       		.uleb128 0xb
+ 879 0046 00       		.byte	0
+ 880 0047 00       		.byte	0
+ 881 0048 07       		.uleb128 0x7
+ 882 0049 13       		.uleb128 0x13
+ 883 004a 01       		.byte	0x1
+ 884 004b 03       		.uleb128 0x3
+ 885 004c 0E       		.uleb128 0xe
+ 886 004d 0B       		.uleb128 0xb
+ 887 004e 05       		.uleb128 0x5
+ 888 004f 3A       		.uleb128 0x3a
+ 889 0050 0B       		.uleb128 0xb
+ 890 0051 3B       		.uleb128 0x3b
+ 891 0052 05       		.uleb128 0x5
+ 892 0053 01       		.uleb128 0x1
+ 893 0054 13       		.uleb128 0x13
+ 894 0055 00       		.byte	0
+ 895 0056 00       		.byte	0
+ 896 0057 08       		.uleb128 0x8
+ 897 0058 0D       		.uleb128 0xd
+ 898 0059 00       		.byte	0
+ 899 005a 03       		.uleb128 0x3
+ 900 005b 0E       		.uleb128 0xe
+ 901 005c 3A       		.uleb128 0x3a
+ 902 005d 0B       		.uleb128 0xb
+ 903 005e 3B       		.uleb128 0x3b
+ 904 005f 05       		.uleb128 0x5
+ 905 0060 49       		.uleb128 0x49
+ 906 0061 13       		.uleb128 0x13
+ 907 0062 38       		.uleb128 0x38
+ 908 0063 0A       		.uleb128 0xa
+ 909 0064 00       		.byte	0
+ 910 0065 00       		.byte	0
+ 911 0066 09       		.uleb128 0x9
+ 912 0067 0D       		.uleb128 0xd
+ 913 0068 00       		.byte	0
+ 914 0069 03       		.uleb128 0x3
+ 915 006a 08       		.uleb128 0x8
+ 916 006b 3A       		.uleb128 0x3a
+ 917 006c 0B       		.uleb128 0xb
+ 918 006d 3B       		.uleb128 0x3b
+ 919 006e 05       		.uleb128 0x5
+ 920 006f 49       		.uleb128 0x49
+ 921 0070 13       		.uleb128 0x13
+ 922 0071 38       		.uleb128 0x38
+ 923 0072 0A       		.uleb128 0xa
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 18
+
+
+ 924 0073 00       		.byte	0
+ 925 0074 00       		.byte	0
+ 926 0075 0A       		.uleb128 0xa
+ 927 0076 21       		.uleb128 0x21
+ 928 0077 00       		.byte	0
+ 929 0078 49       		.uleb128 0x49
+ 930 0079 13       		.uleb128 0x13
+ 931 007a 2F       		.uleb128 0x2f
+ 932 007b 05       		.uleb128 0x5
+ 933 007c 00       		.byte	0
+ 934 007d 00       		.byte	0
+ 935 007e 0B       		.uleb128 0xb
+ 936 007f 16       		.uleb128 0x16
+ 937 0080 00       		.byte	0
+ 938 0081 03       		.uleb128 0x3
+ 939 0082 0E       		.uleb128 0xe
+ 940 0083 3A       		.uleb128 0x3a
+ 941 0084 0B       		.uleb128 0xb
+ 942 0085 3B       		.uleb128 0x3b
+ 943 0086 05       		.uleb128 0x5
+ 944 0087 49       		.uleb128 0x49
+ 945 0088 13       		.uleb128 0x13
+ 946 0089 00       		.byte	0
+ 947 008a 00       		.byte	0
+ 948 008b 0C       		.uleb128 0xc
+ 949 008c 0F       		.uleb128 0xf
+ 950 008d 00       		.byte	0
+ 951 008e 0B       		.uleb128 0xb
+ 952 008f 0B       		.uleb128 0xb
+ 953 0090 49       		.uleb128 0x49
+ 954 0091 13       		.uleb128 0x13
+ 955 0092 00       		.byte	0
+ 956 0093 00       		.byte	0
+ 957 0094 0D       		.uleb128 0xd
+ 958 0095 35       		.uleb128 0x35
+ 959 0096 00       		.byte	0
+ 960 0097 49       		.uleb128 0x49
+ 961 0098 13       		.uleb128 0x13
+ 962 0099 00       		.byte	0
+ 963 009a 00       		.byte	0
+ 964 009b 0E       		.uleb128 0xe
+ 965 009c 2E       		.uleb128 0x2e
+ 966 009d 00       		.byte	0
+ 967 009e 3F       		.uleb128 0x3f
+ 968 009f 0C       		.uleb128 0xc
+ 969 00a0 03       		.uleb128 0x3
+ 970 00a1 0E       		.uleb128 0xe
+ 971 00a2 3A       		.uleb128 0x3a
+ 972 00a3 0B       		.uleb128 0xb
+ 973 00a4 3B       		.uleb128 0x3b
+ 974 00a5 0B       		.uleb128 0xb
+ 975 00a6 27       		.uleb128 0x27
+ 976 00a7 0C       		.uleb128 0xc
+ 977 00a8 11       		.uleb128 0x11
+ 978 00a9 01       		.uleb128 0x1
+ 979 00aa 12       		.uleb128 0x12
+ 980 00ab 01       		.uleb128 0x1
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 19
+
+
+ 981 00ac 40       		.uleb128 0x40
+ 982 00ad 0A       		.uleb128 0xa
+ 983 00ae 9742     		.uleb128 0x2117
+ 984 00b0 0C       		.uleb128 0xc
+ 985 00b1 00       		.byte	0
+ 986 00b2 00       		.byte	0
+ 987 00b3 0F       		.uleb128 0xf
+ 988 00b4 21       		.uleb128 0x21
+ 989 00b5 00       		.byte	0
+ 990 00b6 00       		.byte	0
+ 991 00b7 00       		.byte	0
+ 992 00b8 10       		.uleb128 0x10
+ 993 00b9 34       		.uleb128 0x34
+ 994 00ba 00       		.byte	0
+ 995 00bb 03       		.uleb128 0x3
+ 996 00bc 0E       		.uleb128 0xe
+ 997 00bd 3A       		.uleb128 0x3a
+ 998 00be 0B       		.uleb128 0xb
+ 999 00bf 3B       		.uleb128 0x3b
+ 1000 00c0 0B       		.uleb128 0xb
+ 1001 00c1 49       		.uleb128 0x49
+ 1002 00c2 13       		.uleb128 0x13
+ 1003 00c3 3F       		.uleb128 0x3f
+ 1004 00c4 0C       		.uleb128 0xc
+ 1005 00c5 3C       		.uleb128 0x3c
+ 1006 00c6 0C       		.uleb128 0xc
+ 1007 00c7 00       		.byte	0
+ 1008 00c8 00       		.byte	0
+ 1009 00c9 11       		.uleb128 0x11
+ 1010 00ca 15       		.uleb128 0x15
+ 1011 00cb 00       		.byte	0
+ 1012 00cc 27       		.uleb128 0x27
+ 1013 00cd 0C       		.uleb128 0xc
+ 1014 00ce 00       		.byte	0
+ 1015 00cf 00       		.byte	0
+ 1016 00d0 12       		.uleb128 0x12
+ 1017 00d1 26       		.uleb128 0x26
+ 1018 00d2 00       		.byte	0
+ 1019 00d3 49       		.uleb128 0x49
+ 1020 00d4 13       		.uleb128 0x13
+ 1021 00d5 00       		.byte	0
+ 1022 00d6 00       		.byte	0
+ 1023 00d7 13       		.uleb128 0x13
+ 1024 00d8 34       		.uleb128 0x34
+ 1025 00d9 00       		.byte	0
+ 1026 00da 03       		.uleb128 0x3
+ 1027 00db 0E       		.uleb128 0xe
+ 1028 00dc 3A       		.uleb128 0x3a
+ 1029 00dd 0B       		.uleb128 0xb
+ 1030 00de 3B       		.uleb128 0x3b
+ 1031 00df 0B       		.uleb128 0xb
+ 1032 00e0 49       		.uleb128 0x49
+ 1033 00e1 13       		.uleb128 0x13
+ 1034 00e2 3F       		.uleb128 0x3f
+ 1035 00e3 0C       		.uleb128 0xc
+ 1036 00e4 02       		.uleb128 0x2
+ 1037 00e5 0A       		.uleb128 0xa
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 20
+
+
+ 1038 00e6 00       		.byte	0
+ 1039 00e7 00       		.byte	0
+ 1040 00e8 00       		.byte	0
+ 1041              		.section	.debug_aranges,"",%progbits
+ 1042 0000 1C000000 		.4byte	0x1c
+ 1043 0004 0200     		.2byte	0x2
+ 1044 0006 00000000 		.4byte	.Ldebug_info0
+ 1045 000a 04       		.byte	0x4
+ 1046 000b 00       		.byte	0
+ 1047 000c 0000     		.2byte	0
+ 1048 000e 0000     		.2byte	0
+ 1049 0010 00000000 		.4byte	.Ltext0
+ 1050 0014 30000000 		.4byte	.Letext0-.Ltext0
+ 1051 0018 00000000 		.4byte	0
+ 1052 001c 00000000 		.4byte	0
+ 1053              		.section	.debug_line,"",%progbits
+ 1054              	.Ldebug_line0:
+ 1055 0000 4B010000 		.section	.debug_str,"MS",%progbits,1
+ 1055      02003001 
+ 1055      00000201 
+ 1055      FB0E0D00 
+ 1055      01010101 
+ 1056              	.LASF34:
+ 1057 0000 534F5054 		.ascii	"SOPT5\000"
+ 1057      3500
+ 1058              	.LASF44:
+ 1059 0006 46434647 		.ascii	"FCFG1\000"
+ 1059      3100
+ 1060              	.LASF45:
+ 1061 000c 46434647 		.ascii	"FCFG2\000"
+ 1061      3200
+ 1062              	.LASF36:
+ 1063 0012 53444944 		.ascii	"SDID\000"
+ 1063      00
+ 1064              	.LASF2:
+ 1065 0017 73686F72 		.ascii	"short int\000"
+ 1065      7420696E 
+ 1065      7400
+ 1066              	.LASF15:
+ 1067 0021 4143544C 		.ascii	"ACTLR\000"
+ 1067      5200
+ 1068              	.LASF13:
+ 1069 0027 73697A65 		.ascii	"sizetype\000"
+ 1069      74797065 
+ 1069      00
+ 1070              	.LASF27:
+ 1071 0030 5343425F 		.ascii	"SCB_MemMapPtr\000"
+ 1071      4D656D4D 
+ 1071      61705074 
+ 1071      7200
+ 1072              	.LASF17:
+ 1073 003e 43505549 		.ascii	"CPUID\000"
+ 1073      4400
+ 1074              	.LASF60:
+ 1075 0044 50726F6A 		.ascii	"Project_Settings/Startup_Code/kinetis_sysinit.c\000"
+ 1075      6563745F 
+ 1075      53657474 
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 21
+
+
+ 1075      696E6773 
+ 1075      2F537461 
+ 1076              	.LASF11:
+ 1077 0074 75696E74 		.ascii	"uint8_t\000"
+ 1077      385F7400 
+ 1078              	.LASF55:
+ 1079 007c 5F5F696E 		.ascii	"__init_hardware\000"
+ 1079      69745F68 
+ 1079      61726477 
+ 1079      61726500 
+ 1080              	.LASF28:
+ 1081 008c 5343425F 		.ascii	"SCB_MemMap\000"
+ 1081      4D656D4D 
+ 1081      617000
+ 1082              	.LASF53:
+ 1083 0097 53494D5F 		.ascii	"SIM_MemMapPtr\000"
+ 1083      4D656D4D 
+ 1083      61705074 
+ 1083      7200
+ 1084              	.LASF43:
+ 1085 00a5 52455345 		.ascii	"RESERVED_5\000"
+ 1085      52564544 
+ 1085      5F3500
+ 1086              	.LASF18:
+ 1087 00b0 49435352 		.ascii	"ICSR\000"
+ 1087      00
+ 1088              	.LASF8:
+ 1089 00b5 6C6F6E67 		.ascii	"long long int\000"
+ 1089      206C6F6E 
+ 1089      6720696E 
+ 1089      7400
+ 1090              	.LASF56:
+ 1091 00c3 5F5F7665 		.ascii	"__vector_table\000"
+ 1091      63746F72 
+ 1091      5F746162 
+ 1091      6C6500
+ 1092              	.LASF4:
+ 1093 00d2 6C6F6E67 		.ascii	"long int\000"
+ 1093      20696E74 
+ 1093      00
+ 1094              	.LASF57:
+ 1095 00db 5F657374 		.ascii	"_estack\000"
+ 1095      61636B00 
+ 1096              	.LASF31:
+ 1097 00e3 534F5054 		.ascii	"SOPT1CFG\000"
+ 1097      31434647 
+ 1097      00
+ 1098              	.LASF38:
+ 1099 00ec 53434743 		.ascii	"SCGC4\000"
+ 1099      3400
+ 1100              	.LASF39:
+ 1101 00f2 53434743 		.ascii	"SCGC5\000"
+ 1101      3500
+ 1102              	.LASF40:
+ 1103 00f8 53434743 		.ascii	"SCGC6\000"
+ 1103      3600
+ 1104              	.LASF41:
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 22
+
+
+ 1105 00fe 53434743 		.ascii	"SCGC7\000"
+ 1105      3700
+ 1106              	.LASF50:
+ 1107 0104 52455345 		.ascii	"RESERVED_7\000"
+ 1107      52564544 
+ 1107      5F3700
+ 1108              	.LASF61:
+ 1109 010f 433A5C70 		.ascii	"C:\\projects\\workspace\\FRDM-KL25Z_Blink\\FRDM-KL2"
+ 1109      726F6A65 
+ 1109      6374735C 
+ 1109      776F726B 
+ 1109      73706163 
+ 1110 013e 355A5F42 		.ascii	"5Z_Blink\000"
+ 1110      6C696E6B 
+ 1110      00
+ 1111              	.LASF48:
+ 1112 0147 5549444D 		.ascii	"UIDML\000"
+ 1112      4C00
+ 1113              	.LASF35:
+ 1114 014d 534F5054 		.ascii	"SOPT7\000"
+ 1114      3700
+ 1115              	.LASF42:
+ 1116 0153 434C4B44 		.ascii	"CLKDIV1\000"
+ 1116      49563100 
+ 1117              	.LASF20:
+ 1118 015b 41495243 		.ascii	"AIRCR\000"
+ 1118      5200
+ 1119              	.LASF1:
+ 1120 0161 756E7369 		.ascii	"unsigned char\000"
+ 1120      676E6564 
+ 1120      20636861 
+ 1120      7200
+ 1121              	.LASF51:
+ 1122 016f 434F5043 		.ascii	"COPC\000"
+ 1122      00
+ 1123              	.LASF0:
+ 1124 0174 7369676E 		.ascii	"signed char\000"
+ 1124      65642063 
+ 1124      68617200 
+ 1125              	.LASF9:
+ 1126 0180 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1126      206C6F6E 
+ 1126      6720756E 
+ 1126      7369676E 
+ 1126      65642069 
+ 1127              	.LASF12:
+ 1128 0197 75696E74 		.ascii	"uint32_t\000"
+ 1128      33325F74 
+ 1128      00
+ 1129              	.LASF10:
+ 1130 01a0 756E7369 		.ascii	"unsigned int\000"
+ 1130      676E6564 
+ 1130      20696E74 
+ 1130      00
+ 1131              	.LASF24:
+ 1132 01ad 53484353 		.ascii	"SHCSR\000"
+ 1132      5200
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 23
+
+
+ 1133              	.LASF3:
+ 1134 01b3 73686F72 		.ascii	"short unsigned int\000"
+ 1134      7420756E 
+ 1134      7369676E 
+ 1134      65642069 
+ 1134      6E7400
+ 1135              	.LASF23:
+ 1136 01c6 53485052 		.ascii	"SHPR3\000"
+ 1136      3300
+ 1137              	.LASF22:
+ 1138 01cc 53485052 		.ascii	"SHPR2\000"
+ 1138      3200
+ 1139              	.LASF54:
+ 1140 01d2 44656661 		.ascii	"Default_Handler\000"
+ 1140      756C745F 
+ 1140      48616E64 
+ 1140      6C657200 
+ 1141              	.LASF19:
+ 1142 01e2 56544F52 		.ascii	"VTOR\000"
+ 1142      00
+ 1143              	.LASF26:
+ 1144 01e7 44465352 		.ascii	"DFSR\000"
+ 1144      00
+ 1145              	.LASF30:
+ 1146 01ec 534F5054 		.ascii	"SOPT1\000"
+ 1146      3100
+ 1147              	.LASF49:
+ 1148 01f2 5549444C 		.ascii	"UIDL\000"
+ 1148      00
+ 1149              	.LASF47:
+ 1150 01f7 5549444D 		.ascii	"UIDMH\000"
+ 1150      4800
+ 1151              	.LASF7:
+ 1152 01fd 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1152      20756E73 
+ 1152      69676E65 
+ 1152      6420696E 
+ 1152      7400
+ 1153              	.LASF29:
+ 1154 020f 53494D5F 		.ascii	"SIM_MemMap\000"
+ 1154      4D656D4D 
+ 1154      617000
+ 1155              	.LASF14:
+ 1156 021a 52455345 		.ascii	"RESERVED_0\000"
+ 1156      52564544 
+ 1156      5F3000
+ 1157              	.LASF16:
+ 1158 0225 52455345 		.ascii	"RESERVED_1\000"
+ 1158      52564544 
+ 1158      5F3100
+ 1159              	.LASF21:
+ 1160 0230 52455345 		.ascii	"RESERVED_2\000"
+ 1160      52564544 
+ 1160      5F3200
+ 1161              	.LASF25:
+ 1162 023b 52455345 		.ascii	"RESERVED_3\000"
+ 1162      52564544 
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 24
+
+
+ 1162      5F3300
+ 1163              	.LASF37:
+ 1164 0246 52455345 		.ascii	"RESERVED_4\000"
+ 1164      52564544 
+ 1164      5F3400
+ 1165              	.LASF6:
+ 1166 0251 5F5F7569 		.ascii	"__uint32_t\000"
+ 1166      6E743332 
+ 1166      5F7400
+ 1167              	.LASF46:
+ 1168 025c 52455345 		.ascii	"RESERVED_6\000"
+ 1168      52564544 
+ 1168      5F3600
+ 1169              	.LASF52:
+ 1170 0267 53525643 		.ascii	"SRVCOP\000"
+ 1170      4F5000
+ 1171              	.LASF58:
+ 1172 026e 496E7465 		.ascii	"InterruptVector\000"
+ 1172      72727570 
+ 1172      74566563 
+ 1172      746F7200 
+ 1173              	.LASF59:
+ 1174 027e 474E5520 		.ascii	"GNU C11 5.4.1 20160919 (release) [ARM/embedded-5-br"
+ 1174      43313120 
+ 1174      352E342E 
+ 1174      31203230 
+ 1174      31363039 
+ 1175 02b1 616E6368 		.ascii	"anch revision 240496] -mcpu=cortex-m0 -mthumb -gdwa"
+ 1175      20726576 
+ 1175      6973696F 
+ 1175      6E203234 
+ 1175      30343936 
+ 1176 02e4 72662D32 		.ascii	"rf-2 -O0 -fomit-frame-pointer\000"
+ 1176      202D4F30 
+ 1176      202D666F 
+ 1176      6D69742D 
+ 1176      6672616D 
+ 1177              	.LASF5:
+ 1178 0302 5F5F7569 		.ascii	"__uint8_t\000"
+ 1178      6E74385F 
+ 1178      7400
+ 1179              	.LASF32:
+ 1180 030c 534F5054 		.ascii	"SOPT2\000"
+ 1180      3200
+ 1181              	.LASF33:
+ 1182 0312 534F5054 		.ascii	"SOPT4\000"
+ 1182      3400
+ 1183              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160919 (release) [ARM/embedded-5-bran
+ARM GAS  C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s 			page 25
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 kinetis_sysinit.c
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:55     .text:00000000 $t
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 Default_Handler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 PORTD_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 PORTA_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 LPTimer_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 MCG_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 TSI0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 DAC0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 USBOTG_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 PIT_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 RTC_Seconds_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 RTC_Alarm_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 FTM2_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 FTM1_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 FTM0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 CMP0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 ADC0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 UART2_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 UART1_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 UART0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 SPI1_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 SPI0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 I2C1_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 I2C0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 LLW_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 PMC_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 FTFL_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 MCM_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 DMA3_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 DMA2_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 DMA1_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 DMA0_IRQHandler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 SysTick_Handler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 PendSV_Handler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 SVC_Handler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 HardFault_Handler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:60     .text:00000000 NMI_Handler
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:157    .text:00000008 __init_hardware
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:182    .text:00000020 $d
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:194    .vectortable:00000000 InterruptVector
+C:\Users\Raphael\AppData\Local\Temp\ccBwEdeG.s:191    .vectortable:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+__vector_table
+_estack
+__thumb_startup

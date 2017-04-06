@@ -1,0 +1,487 @@
+/*
+ * recdriver.c
+ *
+ *  Created on: 5 févr. 2017
+ *      Author: Raphael
+ */
+
+#include "recdriver.h"
+#include "../FC1.h"
+#include "../EINT1.h"
+#include "../EINT2.h"
+#include "../EINT3.h"
+#include "../EINT4.h"
+#include "../EINT5.h"
+#include "../EINT6.h"
+#include "../WAIT1.h"
+
+#include <math.h>
+
+#define RECDRIVER_TOTAL_PERIOD_INV	0.001
+#define RECDRIVER_MAX_PERIOD	2000.0
+#define RECDRIVER_MIN_PERIOD	1000.0
+#define RECDRIVER_TIMER_TICK_PERIOD	1000000.0 / (float)FC1_CNT_INP_FREQ_R_0	//[ms]
+#define RECDRIVER_DEADBAND_SIZE		0.0
+#define RECDRIVER_OFST_COMP_LENGTH	200
+#define RECDRIVER_REC_OFST_0		0.0
+#define RECDRIVER_REC_OFST_1		0.0
+#define RECDRIVER_REC_OFST_2		0.0
+#define RECDRIVER_REC_OFST_3		0.0
+#define RECDRIVER_REC_OFST_4		0.0
+#define RECDRIVER_REC_OFST_5		0.0
+#define RECDRIVER_LP_TABLE_SIZE		6
+#define RECDRIVER_LP_TABLE_SIZE_INV		0.166
+
+float rec_ofst[6] = {0};
+
+uint8_t RECDRIVER_GetChannelValue_CH1(uint16_t *ch);
+uint8_t RECDRIVER_GetChannelValue_CH2(uint16_t *ch);
+uint8_t RECDRIVER_GetChannelValue_CH3(uint16_t *ch);
+uint8_t RECDRIVER_GetChannelValue_CH4(uint16_t *ch);
+uint8_t RECDRIVER_GetChannelValue_CH5(uint16_t *ch);
+uint8_t RECDRIVER_GetChannelValue_CH6(uint16_t *ch);
+
+void RECDRIVER_LP_CH1(uint16_t in , uint16_t *out);
+void RECDRIVER_LP_CH2(uint16_t in , uint16_t *out);
+void RECDRIVER_LP_CH3(uint16_t in , uint16_t *out);
+void RECDRIVER_LP_CH4(uint16_t in , uint16_t *out);
+
+void RECDRIVER_Init(int rec_calib_state){
+
+	rtc1Dev.handle = FC1_Init(&rtc1Dev);
+
+	eint1Dev.handle = EInt1_Init(&eint1Dev);
+	eint2Dev.handle = EInt2_Init(&eint2Dev);
+	eint3Dev.handle = EInt3_Init(&eint3Dev);
+	eint4Dev.handle = EInt4_Init(&eint4Dev);
+	eint5Dev.handle = EInt5_Init(&eint5Dev);
+	eint6Dev.handle = EInt6_Init(&eint6Dev);
+
+	rec_ofst[0] = RECDRIVER_REC_OFST_0;
+	rec_ofst[1] = RECDRIVER_REC_OFST_1;
+	rec_ofst[2] = RECDRIVER_REC_OFST_2;
+	rec_ofst[3] = RECDRIVER_REC_OFST_3;
+	rec_ofst[4] = RECDRIVER_REC_OFST_4;
+	rec_ofst[5] = RECDRIVER_REC_OFST_5;
+}
+
+int RECDRIVER_calibOffsets(void){
+
+	static float ofst_temp_rec[6] = {0, 0, 0, 0, 0, 0};
+	float ch_tmp[6];
+	static int i;
+
+	if(i < RECDRIVER_OFST_COMP_LENGTH){
+
+		RECDRIVER_GetAllChannelValue(ch_tmp, FALSE);
+
+		ofst_temp_rec[REC_YAW] 		+= ch_tmp[REC_YAW];
+		ofst_temp_rec[REC_PITCH] 	+= ch_tmp[REC_PITCH];
+		ofst_temp_rec[REC_ROLL] 	+= ch_tmp[REC_ROLL];
+
+		i++;
+		return FALSE;	//Calibration not completed
+	}
+	else{
+		rec_ofst[REC_YAW] 	= ofst_temp_rec[REC_YAW] / (float)RECDRIVER_OFST_COMP_LENGTH;
+		rec_ofst[REC_PITCH] = ofst_temp_rec[REC_PITCH] / (float)RECDRIVER_OFST_COMP_LENGTH;
+		rec_ofst[REC_ROLL] 	= ofst_temp_rec[REC_ROLL] / (float)RECDRIVER_OFST_COMP_LENGTH;
+
+		return TRUE;	//Calibration completed
+	}
+}
+
+void RECDRIVER_GetAllChannelValue(float *ch, int with_filter){
+
+	uint16_t ch_yaw_tmp, ch_pitch_tmp, ch_roll_tmp, ch_gas_tmp, ch_aux1_tmp, ch_aux2_tmp;
+
+	RECDRIVER_GetChannelValue_CH1(&ch_yaw_tmp);
+	RECDRIVER_GetChannelValue_CH2(&ch_gas_tmp);
+	RECDRIVER_GetChannelValue_CH3(&ch_roll_tmp);
+	RECDRIVER_GetChannelValue_CH4(&ch_pitch_tmp);
+	RECDRIVER_GetChannelValue_CH5(&ch_aux1_tmp);
+	RECDRIVER_GetChannelValue_CH6(&ch_aux2_tmp);
+
+	if(with_filter == TRUE){
+		RECDRIVER_LP_CH1(ch_yaw_tmp, &ch_yaw_tmp);
+		RECDRIVER_LP_CH2(ch_pitch_tmp, &ch_pitch_tmp);
+		RECDRIVER_LP_CH3(ch_roll_tmp, &ch_roll_tmp);
+		RECDRIVER_LP_CH4(ch_gas_tmp, &ch_gas_tmp);
+	}
+
+	ch[REC_YAW] = (((float)(ch_yaw_tmp)) * RECDRIVER_TOTAL_PERIOD_INV * 2.0) - rec_ofst[REC_YAW];
+	ch[REC_PITCH] = (((((float)(ch_pitch_tmp)) * RECDRIVER_TOTAL_PERIOD_INV)) * 2.0)  - rec_ofst[REC_PITCH];
+	ch[REC_ROLL] = (((((float)(ch_roll_tmp)) * RECDRIVER_TOTAL_PERIOD_INV)) * 2.0)  - rec_ofst[REC_ROLL];
+	ch[REC_GAS] = (((((float)(ch_gas_tmp) - RECDRIVER_MIN_PERIOD) * RECDRIVER_TOTAL_PERIOD_INV) - 0.5) * 2.0);
+	ch[REC_AUX1] = (((((float)(ch_aux1_tmp) - RECDRIVER_MIN_PERIOD) * RECDRIVER_TOTAL_PERIOD_INV) - 0.5) * 2.0);
+	ch[REC_AUX2] = (((((float)(ch_aux2_tmp) - RECDRIVER_MIN_PERIOD) * RECDRIVER_TOTAL_PERIOD_INV) - 0.5) * 2.0);
+}
+
+uint8_t RECDRIVER_GetChannelValue_CH1(uint16_t *ch){
+
+	static uint16_t ch_old = 0;
+	uint8_t channel_is_updated = FALSE;
+
+	//Save values with coherent order
+	uint16_t tmp;
+	if(rech1Dev.time_low > rech1Dev.time_high){
+		tmp = rech1Dev.time_low;
+		rech1Dev.time_low = rech1Dev.time_high;
+		rech1Dev.time_high = tmp;
+	}
+
+	//Compute PWM duty cycle:
+	if(rech1Dev.time_low_updated == TRUE && rech1Dev.time_high_updated == TRUE){
+		rech1Dev.period = (uint16_t)((float)(rech1Dev.time_high - rech1Dev.time_low) * (float)RECDRIVER_TIMER_TICK_PERIOD);
+
+		if(rech1Dev.period > (uint16_t)RECDRIVER_MIN_PERIOD && rech1Dev.period < (uint16_t)RECDRIVER_MAX_PERIOD){
+			*ch = rech1Dev.period;
+			ch_old = *ch;
+			channel_is_updated = TRUE;
+		}
+		else{
+			*ch = ch_old;
+			channel_is_updated = FALSE;
+		}
+
+		rech1Dev.time_low_updated = FALSE;
+		rech1Dev.time_high_updated = FALSE;
+	}
+	else{
+		*ch = ch_old;
+	}
+
+	return channel_is_updated;
+}
+
+uint8_t RECDRIVER_GetChannelValue_CH2(uint16_t *ch){
+
+	static uint16_t ch_old = 0;
+	uint8_t channel_is_updated = FALSE;
+
+	//Save values with coherent order
+	uint16_t tmp;
+	if(rech2Dev.time_low > rech2Dev.time_high){
+		tmp = rech2Dev.time_low;
+		rech2Dev.time_low = rech2Dev.time_high;
+		rech2Dev.time_high = tmp;
+	}
+
+	//Compute PWM duty cycle:
+	if(rech2Dev.time_low_updated == TRUE && rech2Dev.time_high_updated == TRUE){
+		rech2Dev.period = (uint16_t)((float)(rech2Dev.time_high - rech2Dev.time_low) * (float)RECDRIVER_TIMER_TICK_PERIOD);
+
+		if(rech2Dev.period > (uint16_t)RECDRIVER_MIN_PERIOD && rech2Dev.period < (uint16_t)RECDRIVER_MAX_PERIOD){
+			*ch = rech2Dev.period;
+			ch_old = *ch;
+			channel_is_updated = TRUE;
+		}
+		else{
+			*ch = ch_old;
+			channel_is_updated = FALSE;
+		}
+
+		rech2Dev.time_low_updated = FALSE;
+		rech2Dev.time_high_updated = FALSE;
+	}
+	else{
+		*ch = ch_old;
+	}
+
+	return channel_is_updated;
+}
+
+uint8_t RECDRIVER_GetChannelValue_CH3(uint16_t *ch){
+
+	static uint16_t ch_old = 0;
+	uint8_t channel_is_updated = FALSE;
+
+	//Save values with coherent order
+	uint16_t tmp;
+	if(rech3Dev.time_low > rech3Dev.time_high){
+		tmp = rech3Dev.time_low;
+		rech3Dev.time_low = rech3Dev.time_high;
+		rech3Dev.time_high = tmp;
+	}
+
+	//Compute PWM duty cycle:
+	if(rech3Dev.time_low_updated == TRUE && rech3Dev.time_high_updated == TRUE){
+		rech3Dev.period = (uint16_t)((float)(rech3Dev.time_high - rech3Dev.time_low) * (float)RECDRIVER_TIMER_TICK_PERIOD);
+
+		if(rech3Dev.period > (uint16_t)RECDRIVER_MIN_PERIOD && rech3Dev.period < (uint16_t)RECDRIVER_MAX_PERIOD){
+			*ch = rech3Dev.period;
+			ch_old = *ch;
+			channel_is_updated = TRUE;
+		}
+		else{
+			*ch = ch_old;
+			channel_is_updated = FALSE;
+		}
+
+		rech3Dev.time_low_updated = FALSE;
+		rech3Dev.time_high_updated = FALSE;
+	}
+	else{
+		*ch = ch_old;
+	}
+
+	return channel_is_updated;
+}
+
+uint8_t RECDRIVER_GetChannelValue_CH4(uint16_t *ch){
+
+	static uint16_t ch_old = 0;
+	uint8_t channel_is_updated = FALSE;
+
+	//Save values with coherent order
+	uint16_t tmp;
+	if(rech4Dev.time_low > rech4Dev.time_high){
+		tmp = rech4Dev.time_low;
+		rech4Dev.time_low = rech4Dev.time_high;
+		rech4Dev.time_high = tmp;
+	}
+
+	//Compute PWM duty cycle:
+	if(rech4Dev.time_low_updated == TRUE && rech4Dev.time_high_updated == TRUE){
+		rech4Dev.period = (uint16_t)((float)(rech4Dev.time_high - rech4Dev.time_low) * (float)RECDRIVER_TIMER_TICK_PERIOD);
+
+		if(rech4Dev.period > (uint16_t)RECDRIVER_MIN_PERIOD && rech4Dev.period < (uint16_t)RECDRIVER_MAX_PERIOD){
+			*ch = rech4Dev.period;
+			ch_old = *ch;
+			channel_is_updated = TRUE;
+		}
+		else{
+			*ch = ch_old;
+			channel_is_updated = FALSE;
+		}
+
+		rech4Dev.time_low_updated = FALSE;
+		rech4Dev.time_high_updated = FALSE;
+	}
+	else{
+		*ch = ch_old;
+	}
+
+	return channel_is_updated;
+}
+uint8_t RECDRIVER_GetChannelValue_CH5(uint16_t *ch){
+
+	static float ch_old = 0;
+	uint8_t channel_is_updated = FALSE;
+
+	//Save values with coherent order
+	uint16_t tmp;
+	if(rech5Dev.time_low > rech5Dev.time_high){
+		tmp = rech5Dev.time_low;
+		rech5Dev.time_low = rech5Dev.time_high;
+		rech5Dev.time_high = tmp;
+	}
+
+	//Compute PWM duty cycle:
+	if(rech5Dev.time_low_updated == TRUE && rech5Dev.time_high_updated == TRUE){
+		rech5Dev.period = (uint16_t)((float)(rech5Dev.time_high - rech5Dev.time_low) * (float)RECDRIVER_TIMER_TICK_PERIOD);
+
+		if(rech5Dev.period > (uint16_t)RECDRIVER_MIN_PERIOD && rech5Dev.period < (uint16_t)RECDRIVER_MAX_PERIOD){
+			*ch = rech5Dev.period;
+			ch_old = *ch;
+			channel_is_updated = TRUE;
+		}
+		else{
+			*ch = ch_old;
+			channel_is_updated = FALSE;
+		}
+
+		rech5Dev.time_low_updated = FALSE;
+		rech5Dev.time_high_updated = FALSE;
+	}
+	else{
+		*ch = ch_old;
+	}
+
+	return channel_is_updated;
+}
+
+uint8_t RECDRIVER_GetChannelValue_CH6(uint16_t *ch){
+
+	static float ch_old = 0;
+	uint8_t channel_is_updated = FALSE;
+
+	//Save values with coherent order
+	uint16_t tmp;
+	if(rech6Dev.time_low > rech6Dev.time_high){
+		tmp = rech6Dev.time_low;
+		rech6Dev.time_low = rech6Dev.time_high;
+		rech6Dev.time_high = tmp;
+	}
+
+	//Compute PWM duty cycle:
+	if(rech6Dev.time_low_updated == TRUE && rech6Dev.time_high_updated == TRUE){
+		rech6Dev.period = (uint16_t)((float)(rech6Dev.time_high - rech6Dev.time_low) * (float)RECDRIVER_TIMER_TICK_PERIOD);
+
+		if(rech6Dev.period > (uint16_t)RECDRIVER_MIN_PERIOD && rech6Dev.period < (uint16_t)RECDRIVER_MAX_PERIOD){
+			*ch = rech6Dev.period;
+			ch_old = *ch;
+			channel_is_updated = TRUE;
+		}
+		else{
+			*ch = ch_old;
+			channel_is_updated = FALSE;
+		}
+
+		rech6Dev.time_low_updated = FALSE;
+		rech6Dev.time_high_updated = FALSE;
+	}
+	else{
+		*ch = ch_old;
+	}
+
+	return channel_is_updated;
+}
+
+void RECDRIVER_UpdateChannelPeriod_CH1(void){
+
+	if(rech1Dev.time_low_updated == FALSE){
+		rech1Dev.time_low = FC1_GetCounterValue(&rtc1Dev);
+		rech1Dev.time_low_updated = TRUE;
+	}
+	else if(rech1Dev.time_high_updated == FALSE){
+		rech1Dev.time_high = FC1_GetCounterValue(&rtc1Dev);
+		rech1Dev.time_high_updated = TRUE;
+	}
+}
+
+void RECDRIVER_UpdateChannelPeriod_CH2(void){
+
+	if(rech2Dev.time_low_updated == FALSE){
+		rech2Dev.time_low = FC1_GetCounterValue(&rtc1Dev);
+		rech2Dev.time_low_updated = TRUE;
+	}
+	else if(rech2Dev.time_high_updated == FALSE){
+		rech2Dev.time_high = FC1_GetCounterValue(&rtc1Dev);
+		rech2Dev.time_high_updated = TRUE;
+	}
+}
+
+void RECDRIVER_UpdateChannelPeriod_CH3(void){
+
+	if(rech3Dev.time_low_updated == FALSE){
+		rech3Dev.time_low = FC1_GetCounterValue(&rtc1Dev);
+		rech3Dev.time_low_updated = TRUE;
+	}
+	else if(rech3Dev.time_high_updated == FALSE){
+		rech3Dev.time_high = FC1_GetCounterValue(&rtc1Dev);
+		rech3Dev.time_high_updated = TRUE;
+	}
+}
+
+void RECDRIVER_UpdateChannelPeriod_CH4(void){
+
+	if(rech4Dev.time_low_updated == FALSE){
+		rech4Dev.time_low = FC1_GetCounterValue(&rtc1Dev);
+		rech4Dev.time_low_updated = TRUE;
+	}
+	else if(rech4Dev.time_high_updated == FALSE){
+		rech4Dev.time_high = FC1_GetCounterValue(&rtc1Dev);
+		rech4Dev.time_high_updated = TRUE;
+	}
+}
+
+void RECDRIVER_UpdateChannelPeriod_CH5(void){
+
+	if(rech5Dev.time_low_updated == FALSE){
+		rech5Dev.time_low = FC1_GetCounterValue(&rtc1Dev);
+		rech5Dev.time_low_updated = TRUE;
+	}
+	else if(rech5Dev.time_high_updated == FALSE){
+		rech5Dev.time_high = FC1_GetCounterValue(&rtc1Dev);
+		rech5Dev.time_high_updated = TRUE;
+	}
+}
+
+void RECDRIVER_UpdateChannelPeriod_CH6(void){
+
+	if(rech6Dev.time_low_updated == FALSE){
+		rech6Dev.time_low = FC1_GetCounterValue(&rtc1Dev);
+		rech6Dev.time_low_updated = TRUE;
+	}
+	else if(rech6Dev.time_high_updated == FALSE){
+		rech6Dev.time_high = FC1_GetCounterValue(&rtc1Dev);
+		rech6Dev.time_high_updated = TRUE;
+	}
+}
+
+void RECDRIVER_LP_CH1(uint16_t in , uint16_t *out) {
+
+	uint16_t mem_mean = 0;
+	static uint16_t mem[RECDRIVER_LP_TABLE_SIZE] = {0};
+
+	int i;
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE - 1; i++) {
+		mem[i] = mem[i + 1];
+	}
+	mem[RECDRIVER_LP_TABLE_SIZE - 1] = in;
+
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE; i++) {
+		mem_mean += mem[i];
+	}
+	mem_mean /= (uint16_t)RECDRIVER_LP_TABLE_SIZE;
+
+	*out = mem_mean;
+}
+
+void RECDRIVER_LP_CH2(uint16_t in , uint16_t *out) {
+
+	uint16_t mem_mean = 0;
+	static uint16_t mem[RECDRIVER_LP_TABLE_SIZE] = {0};
+
+	int i;
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE - 1; i++) {
+		mem[i] = mem[i + 1];
+	}
+	mem[RECDRIVER_LP_TABLE_SIZE - 1] = in;
+
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE; i++) {
+		mem_mean += mem[i];
+	}
+	mem_mean /= (uint16_t)RECDRIVER_LP_TABLE_SIZE;
+
+	*out = mem_mean;
+}
+
+void RECDRIVER_LP_CH3(uint16_t in , uint16_t *out) {
+
+	uint16_t mem_mean = 0;
+	static uint16_t mem[RECDRIVER_LP_TABLE_SIZE] = {0};
+
+	int i;
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE - 1; i++) {
+		mem[i] = mem[i + 1];
+	}
+	mem[RECDRIVER_LP_TABLE_SIZE - 1] = in;
+
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE; i++) {
+		mem_mean += mem[i];
+	}
+	mem_mean /= (uint16_t)RECDRIVER_LP_TABLE_SIZE;
+
+	*out = mem_mean;
+}
+
+void RECDRIVER_LP_CH4(uint16_t in , uint16_t *out) {
+
+	uint16_t mem_mean = 0;
+	static uint16_t mem[RECDRIVER_LP_TABLE_SIZE] = {0};
+
+	int i;
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE - 1; i++) {
+		mem[i] = mem[i + 1];
+	}
+	mem[RECDRIVER_LP_TABLE_SIZE - 1] = in;
+
+	for (i = 0; i < RECDRIVER_LP_TABLE_SIZE; i++) {
+		mem_mean += mem[i];
+	}
+	mem_mean /= (uint16_t)RECDRIVER_LP_TABLE_SIZE;
+
+	*out = mem_mean;
+}

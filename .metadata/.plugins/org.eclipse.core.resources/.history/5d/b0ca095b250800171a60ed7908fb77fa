@@ -1,0 +1,8 @@
+#ifndef GATT_H_
+#define GATT_H_
+
+#define YAW		0
+#define PITCH	1
+#define ROLL	2
+
+#endif
