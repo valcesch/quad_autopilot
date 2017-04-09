@@ -66,9 +66,9 @@ void CONTROL_callBack(float rec_yaw, float rec_pitch,
 //			yaw_cmd 	= CONTROL_yawPID_rate(0, w_z);
 //			roll_cmd 	= CONTROL_rollPID_rate(0, w_x);
 //			pitch_cmd	= CONTROL_pitchPID_rate(0, w_y);
-			yaw_cmd 	= CONTROL_yawPID_rate(100 * rec_yaw, w_z);
-			roll_cmd 	= CONTROL_rollPID_rate(CONTROL_rollPID_angle(0.25 * rec_roll, roll), w_x);
-			pitch_cmd	= CONTROL_pitchPID_rate(CONTROL_pitchPID_angle(0.25 * rec_pitch, pitch), w_y);
+			yaw_cmd 	= CONTROL_yawPID_rate(0 * rec_yaw, w_z);
+			roll_cmd 	= CONTROL_rollPID_rate(CONTROL_rollPID_angle(0.0 * rec_roll, roll), w_x);
+			pitch_cmd	= CONTROL_pitchPID_rate(CONTROL_pitchPID_angle(0.0 * rec_pitch, pitch), w_y);
 		}
 
 		/*AVD*/*mot_cmd_avd = - roll_cmd + pitch_cmd + yaw_cmd + alt_cmd;

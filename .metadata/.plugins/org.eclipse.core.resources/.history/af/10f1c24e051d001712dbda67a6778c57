@@ -1,0 +1,314 @@
+
+#define GLOBAL_WITH_USB_CDC		0
+
+#include "Cpu.h"
+#include "Events.h"
+#include "FRTOS1.h"
+#include "MCUC1.h"
+#include "UTIL1.h"
+#include "CI2C1.h"
+#include "EInt1.h"
+#include "EInt2.h"
+#include "EInt3.h"
+#include "EInt4.h"
+#include "EInt5.h"
+#include "EInt6.h"
+#include "EInt7.h"
+#include "PWM1.h"
+#include "TU1.h"
+#include "PWM2.h"
+#include "PWM3.h"
+#include "PWM4.h"
+#include "FC1.h"
+#include "TU3.h"
+#include "USB1.h"
+#include "CDC1.h"
+#include "Tx1.h"
+#include "Rx1.h"
+#include "USB0.h"
+#include "CLS1.h"
+#include "CS1.h"
+#include "WAIT1.h"
+#include "TMOUT1.h"
+#include "XF1.h"
+#include "GPIO1.h"
+/* Including shared modules, which are used for whole project */
+#include "PE_Types.h"
+#include "PE_Error.h"
+#include "PE_Const.h"
+#include "IO_Map.h"
+
+#include "libSENSVECT/GYROACCVect.h"
+#include "libMOTDRIVE/optoe300.h"
+#include "libRECDRIVER/recdriver.h"
+#include "global.h"
+#include "libADCS/gAtt.h"
+
+#ifdef GLOBAL_WITH_USB_CDC
+#include "libUSB/usbdrive.h"
+#include "libCONTROL/control.h"
+#include "libUSB/com.h"
+#include "libUSB/an_packets.h"
+#endif
+
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+
+
+typedef struct {
+	LDD_TDeviceData *handle; /* LDD device handle */
+} GPIO1_Dev;
+
+GPIO1_Dev gpio1Dev;
+
+float observator[10] = {0};
+
+static portTASK_FUNCTION(Task_adcs, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+	float G[3] = {0}, A[3] = {0};
+
+	GYROACCVECT_Init();
+
+	while(GYROACCVECT_CheckForStabilization() == FALSE){
+		FRTOS1_vTaskDelay(GYROACCVECT_INIT_GYRO_CALIB_TRESH_SAMPL_DELAY/portTICK_RATE_MS);
+	}
+
+	while(GYROACCVECT_calibOffsets() == FALSE){
+		FRTOS1_vTaskDelay(GYROACCVECT_SAMPL_DELAY/portTICK_RATE_MS);
+	}
+
+	for(;;) {
+
+		GPIO1_SetFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		float G_raw[3] = {0}, A_raw[3] = {0};	//Non filtered data
+		int stab_comp = 0;
+
+		GYROACCVECT_NB_StartVectorAcquisition();
+		while(GYROACCVECT_NB_AskForVectorAcquisition() !=ERR_OK);
+
+		while(GYROACCVECT_NB_GetVector(G_raw, A_raw) != 0){	//While waiting for data from gyroscope
+
+			if(stab_comp == 0){
+
+				float G_tmp[3] = {0, 0, 0}, Eul_tmp[3] = {0, 0, 0};
+
+				GYROACCVECT_gyro_butterFilter_x(G[0], &G_tmp[0]);
+				GYROACCVECT_gyro_butterFilter_y(G[1], &G_tmp[1]);
+				GYROACCVECT_gyro_butterFilter_z(G[2], &G_tmp[2]);
+				GATT_gyro_x_angle_LP(G_tmp[0], &gstate.w_x);		//Move second filtering step elsewhere
+				GATT_gyro_y_angle_LP(G_tmp[1], &gstate.w_y);
+				GATT_gyro_z_angle_LP(G_tmp[2], &gstate.w_z);
+
+				GYROACCVECT_acc_butterFilter_x(A[0], &gstate.a_x);
+				GYROACCVECT_acc_butterFilter_y(A[1], &gstate.a_y);
+				GYROACCVECT_acc_butterFilter_z(A[2], &gstate.a_z);
+
+				GATT_getAtt(&gstate.w_x, &gstate.a_x, Eul_tmp, 0.002);
+
+				GATT_x_angle_LP(Eul_tmp[0], &gstate.yaw);
+				GATT_y_angle_LP(Eul_tmp[1], &gstate.pitch);
+				GATT_z_angle_LP(Eul_tmp[2], &gstate.roll);
+
+				stab_comp = 1;
+			}
+		}
+
+
+		A[0] = A_raw[0];
+		A[1] = A_raw[1];
+		A[2] = A_raw[2];
+
+		G[0] = G_raw[0];
+		G[1] = G_raw[1];
+		G[2] = G_raw[2];
+
+		GPIO1_ClearFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		FRTOS1_vTaskDelay(2/portTICK_RATE_MS);	//500Hz
+	}
+}
+
+static portTASK_FUNCTION(Task_control, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+
+	FRTOS1_vTaskDelay(3000/portTICK_RATE_MS);
+
+	OPTOE300_Init();
+
+	gstate.mot_cmd[MOT_AVD] = 0;
+	gstate.mot_cmd[MOT_AVG] = 0;
+	gstate.mot_cmd[MOT_ARD] = 0;
+	gstate.mot_cmd[MOT_ARG] = 0;
+
+	OPTOE300_SetSpeed(gstate.mot_cmd);
+
+	FRTOS1_vTaskDelay(1000/portTICK_RATE_MS);
+
+	CONTROL_Init();
+
+//	float wx_o = 0.0, wy_o = 0.0, wz_o = 0.0;
+
+	for(;;) {
+
+//		GPIO1_SetFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+//		//Compute rate variation:
+//		float dx = (gstate.w_x - wx_o) * 0.002;	//not usefull to multiply
+//		float dy = (gstate.w_y - wy_o) * 0.002;	//not usefull to multiply
+//		float dz = (gstate.w_z - wz_o) * 0.002;	//not usefull to multiply
+//
+//
+//		wx_o = gstate.w_x;
+//		wy_o = gstate.w_y;
+//		wz_o = gstate.w_z;
+//
+//		float tresh = 0.0042;
+//		if(dx < tresh && dx > -tresh &&
+//				dy < tresh && dy > -tresh &&
+//				dz < tresh && dz > -tresh){
+
+		CONTROL_callBack(gstate.rec_ch[REC_YAW], gstate.rec_ch[REC_PITCH],
+				gstate.rec_ch[REC_ROLL], gstate.rec_ch[REC_GAS],
+				gstate.rec_ch[REC_AUX1], gstate.rec_ch[REC_AUX2],
+				&gstate.mot_cmd[MOT_AVD], &gstate.mot_cmd[MOT_AVG],
+				&gstate.mot_cmd[MOT_ARD], &gstate.mot_cmd[MOT_ARG],
+				gstate.w_x, gstate.w_y, gstate.w_z,
+				gstate.yaw, gstate.pitch, gstate.roll,
+				observator);
+//		}
+
+		OPTOE300_SetSpeed(gstate.mot_cmd);
+
+//		GPIO1_ClearFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		FRTOS1_vTaskDelay(3/portTICK_RATE_MS);	//500 Hz
+	}
+}
+
+static portTASK_FUNCTION(Task_receiver, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+	RECDRIVER_Init(TRUE);
+
+	FRTOS1_vTaskDelay(RECDRIVER_SAMPL_DELAY/portTICK_RATE_MS);	//Give time to make at least one turn !
+
+	while(RECDRIVER_calibOffsets() == FALSE){
+		FRTOS1_vTaskDelay(RECDRIVER_SAMPL_DELAY/portTICK_RATE_MS);
+	}
+
+	for(;;) {
+
+//		GPIO1_SetFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		RECDRIVER_GetAllChannelValue(gstate.rec_ch, TRUE);
+
+//		GPIO1_ClearFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		FRTOS1_vTaskDelay(30/portTICK_RATE_MS);
+	}
+}
+
+#ifdef GLOBAL_WITH_USB_CDC
+static portTASK_FUNCTION(Task_logger, pvParameters) {
+	(void)pvParameters; /* parameter not used */
+
+	for(;;) {
+
+//		GPIO1_SetFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+		if (COM_request_is_available() == TRUE) {
+
+			uint8_t packet_id = COM_an_packet_receive_id();
+
+			if (packet_id == packet_id_request) {
+				unsigned char request_id = 0;
+				if (COM_receive_request_packet(&request_id) == 0) {
+					if (request_id == packet_id_status) {
+
+						COM_send_status_packet(gstate.yaw * 180.0 / M_PI, gstate.pitch * 180.0 / M_PI, gstate.roll * 180.0 / M_PI,
+								gstate.w_x, gstate.w_y, gstate.w_z,
+								gstate.a_x * 10.0f, gstate.a_y * 10.0f, gstate.a_z * 10.0f);
+					}
+				}
+			}
+		}
+
+//		GPIO1_ClearFieldBits(&gpio1Dev, rtos_check, 0x01);
+
+//		FRTOS1_vTaskDelay(10/portTICK_RATE_MS);	//Cannot run at more than 16.6 Hz
+	}
+}
+#endif
+
+int main(void)
+{
+
+	PE_low_level_init();
+
+	if (FRTOS1_xTaskCreate(
+			Task_adcs,  /* pointer to the task */
+			(signed portCHAR *)"Task_adcs", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			1,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+	if (FRTOS1_xTaskCreate(
+			Task_control,  /* pointer to the task */
+			(signed portCHAR *)"Task_control", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			1,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+	if (FRTOS1_xTaskCreate(
+			Task_receiver,  /* pointer to the task */
+			(signed portCHAR *)"Task_receiver", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			1,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+#ifdef GLOBAL_WITH_USB_CDC
+	if (FRTOS1_xTaskCreate(
+			Task_logger,  /* pointer to the task */
+			(signed portCHAR *)"Task_logger", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			tskIDLE_PRIORITY,  /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS)
+	{
+		for(;;){}; /* Out of heap memory? */
+	}
+
+	USBDRIVE_Init();
+#endif
+
+	gpio1Dev.handle = GPIO1_Init(&gpio1Dev);
+
+#ifdef PEX_RTOS_START
+	PEX_RTOS_START();                  /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
+#endif
+
+	for(;;){
+	}
+
+	return 0;
+}

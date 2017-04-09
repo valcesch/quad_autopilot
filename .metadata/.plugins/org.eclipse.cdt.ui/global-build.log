@@ -1,8 +1,280 @@
-22:23:11 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+11:17:32 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
 make all 
+'Building file: ../Sources/libUSB/an_packet_protocol.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libUSB/an_packet_protocol.d" -MT"Sources/libUSB/an_packet_protocol.d" -o "Sources/libUSB/an_packet_protocol.o" "../Sources/libUSB/an_packet_protocol.c"
+'Finished building: ../Sources/libUSB/an_packet_protocol.c'
+' '
+'Building file: ../Sources/libUSB/an_packets.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libUSB/an_packets.d" -MT"Sources/libUSB/an_packets.d" -o "Sources/libUSB/an_packets.o" "../Sources/libUSB/an_packets.c"
+'Finished building: ../Sources/libUSB/an_packets.c'
+' '
+'Building file: ../Sources/libUSB/com.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libUSB/com.d" -MT"Sources/libUSB/com.d" -o "Sources/libUSB/com.o" "../Sources/libUSB/com.c"
+'Finished building: ../Sources/libUSB/com.c'
+' '
+'Building file: ../Sources/libUSB/crc.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libUSB/crc.d" -MT"Sources/libUSB/crc.d" -o "Sources/libUSB/crc.o" "../Sources/libUSB/crc.c"
+'Finished building: ../Sources/libUSB/crc.c'
+' '
+'Building file: ../Sources/libUSB/usbdrive.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libUSB/usbdrive.d" -MT"Sources/libUSB/usbdrive.d" -o "Sources/libUSB/usbdrive.o" "../Sources/libUSB/usbdrive.c"
+'Finished building: ../Sources/libUSB/usbdrive.c'
+' '
+'Building file: ../Sources/libSENSVECT/GYROACCVect.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libSENSVECT/GYROACCVect.d" -MT"Sources/libSENSVECT/GYROACCVect.d" -o "Sources/libSENSVECT/GYROACCVect.o" "../Sources/libSENSVECT/GYROACCVect.c"
+../Sources/libSENSVECT/GYROACCVect.c: In function 'GYROACCVECT_calibOffsets':
+../Sources/libSENSVECT/GYROACCVect.c:225:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+'Finished building: ../Sources/libSENSVECT/GYROACCVect.c'
+' '
+'Building file: ../Sources/libSENSDRIVE/mpu6050.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libSENSDRIVE/mpu6050.d" -MT"Sources/libSENSDRIVE/mpu6050.d" -o "Sources/libSENSDRIVE/mpu6050.o" "../Sources/libSENSDRIVE/mpu6050.c"
+'Finished building: ../Sources/libSENSDRIVE/mpu6050.c'
+' '
+'Building file: ../Sources/libRECDRIVER/recdriver.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libRECDRIVER/recdriver.d" -MT"Sources/libRECDRIVER/recdriver.d" -o "Sources/libRECDRIVER/recdriver.o" "../Sources/libRECDRIVER/recdriver.c"
+'Finished building: ../Sources/libRECDRIVER/recdriver.c'
+' '
+'Building file: ../Sources/libMOTDRIVE/optoe300.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libMOTDRIVE/optoe300.d" -MT"Sources/libMOTDRIVE/optoe300.d" -o "Sources/libMOTDRIVE/optoe300.o" "../Sources/libMOTDRIVE/optoe300.c"
+'Finished building: ../Sources/libMOTDRIVE/optoe300.c'
+' '
+'Building file: ../Sources/libCONTROL/control.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libCONTROL/control.d" -MT"Sources/libCONTROL/control.d" -o "Sources/libCONTROL/control.o" "../Sources/libCONTROL/control.c"
+'Finished building: ../Sources/libCONTROL/control.c'
+' '
+'Building file: ../Sources/libADCS/gAtt.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libADCS/gAtt.d" -MT"Sources/libADCS/gAtt.d" -o "Sources/libADCS/gAtt.o" "../Sources/libADCS/gAtt.c"
+../Sources/libADCS/gAtt.c: In function 'GATT_getAtt':
+../Sources/libADCS/gAtt.c:47:8: warning: unused variable 'A_norm' [-Wunused-variable]
+  float A_norm = GATT_normVector(A);
+        ^
+'Finished building: ../Sources/libADCS/gAtt.c'
+' '
+'Building file: ../Sources/CDC1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/CDC1.d" -MT"Sources/CDC1.d" -o "Sources/CDC1.o" "../Sources/CDC1.c"
+'Finished building: ../Sources/CDC1.c'
+' '
+'Building file: ../Sources/CI2C1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/CI2C1.d" -MT"Sources/CI2C1.d" -o "Sources/CI2C1.o" "../Sources/CI2C1.c"
+'Finished building: ../Sources/CI2C1.c'
+' '
+'Building file: ../Sources/CLS1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/CLS1.d" -MT"Sources/CLS1.d" -o "Sources/CLS1.o" "../Sources/CLS1.c"
+'Finished building: ../Sources/CLS1.c'
+' '
+'Building file: ../Sources/CS1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/CS1.d" -MT"Sources/CS1.d" -o "Sources/CS1.o" "../Sources/CS1.c"
+'Finished building: ../Sources/CS1.c'
+' '
+'Building file: ../Sources/Cpu.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/Cpu.d" -MT"Sources/Cpu.d" -o "Sources/Cpu.o" "../Sources/Cpu.c"
+'Finished building: ../Sources/Cpu.c'
+' '
+'Building file: ../Sources/EInt1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/EInt1.d" -MT"Sources/EInt1.d" -o "Sources/EInt1.o" "../Sources/EInt1.c"
+'Finished building: ../Sources/EInt1.c'
+' '
+'Building file: ../Sources/EInt2.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/EInt2.d" -MT"Sources/EInt2.d" -o "Sources/EInt2.o" "../Sources/EInt2.c"
+'Finished building: ../Sources/EInt2.c'
+' '
+'Building file: ../Sources/EInt3.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/EInt3.d" -MT"Sources/EInt3.d" -o "Sources/EInt3.o" "../Sources/EInt3.c"
+'Finished building: ../Sources/EInt3.c'
+' '
+'Building file: ../Sources/EInt4.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/EInt4.d" -MT"Sources/EInt4.d" -o "Sources/EInt4.o" "../Sources/EInt4.c"
+'Finished building: ../Sources/EInt4.c'
+' '
+'Building file: ../Sources/EInt5.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/EInt5.d" -MT"Sources/EInt5.d" -o "Sources/EInt5.o" "../Sources/EInt5.c"
+'Finished building: ../Sources/EInt5.c'
+' '
+'Building file: ../Sources/EInt6.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/EInt6.d" -MT"Sources/EInt6.d" -o "Sources/EInt6.o" "../Sources/EInt6.c"
+'Finished building: ../Sources/EInt6.c'
+' '
+'Building file: ../Sources/EInt7.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/EInt7.d" -MT"Sources/EInt7.d" -o "Sources/EInt7.o" "../Sources/EInt7.c"
+'Finished building: ../Sources/EInt7.c'
+' '
+'Building file: ../Sources/Events.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/Events.d" -MT"Sources/Events.d" -o "Sources/Events.o" "../Sources/Events.c"
+'Finished building: ../Sources/Events.c'
+' '
+'Building file: ../Sources/FC1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/FC1.d" -MT"Sources/FC1.d" -o "Sources/FC1.o" "../Sources/FC1.c"
+'Finished building: ../Sources/FC1.c'
+' '
+'Building file: ../Sources/FRTOS1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/FRTOS1.d" -MT"Sources/FRTOS1.d" -o "Sources/FRTOS1.o" "../Sources/FRTOS1.c"
+'Finished building: ../Sources/FRTOS1.c'
+' '
+'Building file: ../Sources/GPIO1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/GPIO1.d" -MT"Sources/GPIO1.d" -o "Sources/GPIO1.o" "../Sources/GPIO1.c"
+'Finished building: ../Sources/GPIO1.c'
+' '
+'Building file: ../Sources/MCUC1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/MCUC1.d" -MT"Sources/MCUC1.d" -o "Sources/MCUC1.o" "../Sources/MCUC1.c"
+'Finished building: ../Sources/MCUC1.c'
+' '
+'Building file: ../Sources/PE_LDD.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/PE_LDD.d" -MT"Sources/PE_LDD.d" -o "Sources/PE_LDD.o" "../Sources/PE_LDD.c"
+'Finished building: ../Sources/PE_LDD.c'
+' '
+'Building file: ../Sources/PWM1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/PWM1.d" -MT"Sources/PWM1.d" -o "Sources/PWM1.o" "../Sources/PWM1.c"
+'Finished building: ../Sources/PWM1.c'
+' '
+'Building file: ../Sources/PWM2.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/PWM2.d" -MT"Sources/PWM2.d" -o "Sources/PWM2.o" "../Sources/PWM2.c"
+'Finished building: ../Sources/PWM2.c'
+' '
+'Building file: ../Sources/PWM3.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/PWM3.d" -MT"Sources/PWM3.d" -o "Sources/PWM3.o" "../Sources/PWM3.c"
+'Finished building: ../Sources/PWM3.c'
+' '
+'Building file: ../Sources/PWM4.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/PWM4.d" -MT"Sources/PWM4.d" -o "Sources/PWM4.o" "../Sources/PWM4.c"
+'Finished building: ../Sources/PWM4.c'
+' '
+'Building file: ../Sources/Rx1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/Rx1.d" -MT"Sources/Rx1.d" -o "Sources/Rx1.o" "../Sources/Rx1.c"
+'Finished building: ../Sources/Rx1.c'
+' '
+'Building file: ../Sources/TMOUT1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/TMOUT1.d" -MT"Sources/TMOUT1.d" -o "Sources/TMOUT1.o" "../Sources/TMOUT1.c"
+'Finished building: ../Sources/TMOUT1.c'
+' '
+'Building file: ../Sources/TU1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/TU1.d" -MT"Sources/TU1.d" -o "Sources/TU1.o" "../Sources/TU1.c"
+'Finished building: ../Sources/TU1.c'
+' '
+'Building file: ../Sources/TU3.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/TU3.d" -MT"Sources/TU3.d" -o "Sources/TU3.o" "../Sources/TU3.c"
+'Finished building: ../Sources/TU3.c'
+' '
+'Building file: ../Sources/Tx1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/Tx1.d" -MT"Sources/Tx1.d" -o "Sources/Tx1.o" "../Sources/Tx1.c"
+'Finished building: ../Sources/Tx1.c'
+' '
+'Building file: ../Sources/USB0.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/USB0.d" -MT"Sources/USB0.d" -o "Sources/USB0.o" "../Sources/USB0.c"
+'Finished building: ../Sources/USB0.c'
+' '
+'Building file: ../Sources/USB1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/USB1.d" -MT"Sources/USB1.d" -o "Sources/USB1.o" "../Sources/USB1.c"
+'Finished building: ../Sources/USB1.c'
+' '
+'Building file: ../Sources/UTIL1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/UTIL1.d" -MT"Sources/UTIL1.d" -o "Sources/UTIL1.o" "../Sources/UTIL1.c"
+'Finished building: ../Sources/UTIL1.c'
+' '
+'Building file: ../Sources/Vectors.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/Vectors.d" -MT"Sources/Vectors.d" -o "Sources/Vectors.o" "../Sources/Vectors.c"
+'Finished building: ../Sources/Vectors.c'
+' '
+'Building file: ../Sources/WAIT1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/WAIT1.d" -MT"Sources/WAIT1.d" -o "Sources/WAIT1.o" "../Sources/WAIT1.c"
+'Finished building: ../Sources/WAIT1.c'
+' '
+'Building file: ../Sources/XF1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/XF1.d" -MT"Sources/XF1.d" -o "Sources/XF1.o" "../Sources/XF1.c"
+'Finished building: ../Sources/XF1.c'
+' '
+'Building file: ../Sources/croutine.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/croutine.d" -MT"Sources/croutine.d" -o "Sources/croutine.o" "../Sources/croutine.c"
+'Finished building: ../Sources/croutine.c'
+' '
+'Building file: ../Sources/event_groups.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/event_groups.d" -MT"Sources/event_groups.d" -o "Sources/event_groups.o" "../Sources/event_groups.c"
+'Finished building: ../Sources/event_groups.c'
+' '
+'Building file: ../Sources/heap_1.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/heap_1.d" -MT"Sources/heap_1.d" -o "Sources/heap_1.o" "../Sources/heap_1.c"
+'Finished building: ../Sources/heap_1.c'
+' '
+'Building file: ../Sources/heap_2.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/heap_2.d" -MT"Sources/heap_2.d" -o "Sources/heap_2.o" "../Sources/heap_2.c"
+'Finished building: ../Sources/heap_2.c'
+' '
+'Building file: ../Sources/heap_3.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/heap_3.d" -MT"Sources/heap_3.d" -o "Sources/heap_3.o" "../Sources/heap_3.c"
+'Finished building: ../Sources/heap_3.c'
+' '
+'Building file: ../Sources/heap_4.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/heap_4.d" -MT"Sources/heap_4.d" -o "Sources/heap_4.o" "../Sources/heap_4.c"
+'Finished building: ../Sources/heap_4.c'
+' '
+'Building file: ../Sources/heap_5.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/heap_5.d" -MT"Sources/heap_5.d" -o "Sources/heap_5.o" "../Sources/heap_5.c"
+'Finished building: ../Sources/heap_5.c'
+' '
+'Building file: ../Sources/list.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/list.d" -MT"Sources/list.d" -o "Sources/list.o" "../Sources/list.c"
+'Finished building: ../Sources/list.c'
+' '
 'Building file: ../Sources/main.c'
 'Invoking: Cross GCC Compiler'
 arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/main.d" -MT"Sources/main.d" -o "Sources/main.o" "../Sources/main.c"
+../Sources/main.c: In function 'Task_adcs':
+../Sources/main.c:96:33: warning: unused variable 'Eul_tmp' [-Wunused-variable]
+     float G_tmp[3] = {0, 0, 0}, Eul_tmp[3] = {0, 0, 0};
+                                 ^
 In file included from ../Sources/Events.h:38:0,
                  from ../Sources/main.c:5:
 ../Sources/main.c: In function 'main':
@@ -62,6 +334,71 @@ In file included from ../Sources/FRTOS1.h:249:0,
              ^
 'Finished building: ../Sources/main.c'
 ' '
+'Building file: ../Sources/port.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/port.d" -MT"Sources/port.d" -o "Sources/port.o" "../Sources/port.c"
+'Finished building: ../Sources/port.c'
+' '
+'Building file: ../Sources/queue.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/queue.d" -MT"Sources/queue.d" -o "Sources/queue.o" "../Sources/queue.c"
+'Finished building: ../Sources/queue.c'
+' '
+'Building file: ../Sources/tasks.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/tasks.d" -MT"Sources/tasks.d" -o "Sources/tasks.o" "../Sources/tasks.c"
+'Finished building: ../Sources/tasks.c'
+' '
+'Building file: ../Sources/timers.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/timers.d" -MT"Sources/timers.d" -o "Sources/timers.o" "../Sources/timers.c"
+'Finished building: ../Sources/timers.c'
+' '
+'Building file: ../Sources/usb_cdc.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/usb_cdc.d" -MT"Sources/usb_cdc.d" -o "Sources/usb_cdc.o" "../Sources/usb_cdc.c"
+'Finished building: ../Sources/usb_cdc.c'
+' '
+'Building file: ../Sources/usb_cdc_pstn.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/usb_cdc_pstn.d" -MT"Sources/usb_cdc_pstn.d" -o "Sources/usb_cdc_pstn.o" "../Sources/usb_cdc_pstn.c"
+'Finished building: ../Sources/usb_cdc_pstn.c'
+' '
+'Building file: ../Sources/usb_class.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/usb_class.d" -MT"Sources/usb_class.d" -o "Sources/usb_class.o" "../Sources/usb_class.c"
+'Finished building: ../Sources/usb_class.c'
+' '
+'Building file: ../Sources/usb_dci_kinetis.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/usb_dci_kinetis.d" -MT"Sources/usb_dci_kinetis.d" -o "Sources/usb_dci_kinetis.o" "../Sources/usb_dci_kinetis.c"
+'Finished building: ../Sources/usb_dci_kinetis.c'
+' '
+'Building file: ../Sources/usb_descriptor.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/usb_descriptor.d" -MT"Sources/usb_descriptor.d" -o "Sources/usb_descriptor.o" "../Sources/usb_descriptor.c"
+'Finished building: ../Sources/usb_descriptor.c'
+' '
+'Building file: ../Sources/usb_driver.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/usb_driver.d" -MT"Sources/usb_driver.d" -o "Sources/usb_driver.o" "../Sources/usb_driver.c"
+'Finished building: ../Sources/usb_driver.c'
+' '
+'Building file: ../Sources/usb_framework.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/usb_framework.d" -MT"Sources/usb_framework.d" -o "Sources/usb_framework.o" "../Sources/usb_framework.c"
+'Finished building: ../Sources/usb_framework.c'
+' '
+'Building file: ../Sources/wdt_kinetis.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/wdt_kinetis.d" -MT"Sources/wdt_kinetis.d" -o "Sources/wdt_kinetis.o" "../Sources/wdt_kinetis.c"
+'Finished building: ../Sources/wdt_kinetis.c'
+' '
+'Building file: ../Project_Settings/Startup_Code/startup.S'
+'Invoking: Cross GCC Assembler'
+arm-none-eabi-as  -o "Project_Settings/Startup_Code/startup.o" "../Project_Settings/Startup_Code/startup.S"
+'Finished building: ../Project_Settings/Startup_Code/startup.S'
+' '
 'Building target: FRDM-KL25Z_BlinkEclipse.elf'
 'Invoking: Cross GCC Linker'
 arm-none-eabi-gcc -nostartfiles -mthumb -mcpu=cortex-m0 -TC:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Project_Settings/Linker_Files/MKL25Z128_flash.ld -o "FRDM-KL25Z_BlinkEclipse.elf"  ./Sources/libUSB/an_packet_protocol.o ./Sources/libUSB/an_packets.o ./Sources/libUSB/com.o ./Sources/libUSB/crc.o ./Sources/libUSB/usbdrive.o  ./Sources/libSENSVECT/GYROACCVect.o  ./Sources/libSENSDRIVE/mpu6050.o  ./Sources/libRECDRIVER/recdriver.o  ./Sources/libMOTDRIVE/optoe300.o  ./Sources/libCONTROL/control.o  ./Sources/libADCS/gAtt.o  ./Sources/CDC1.o ./Sources/CI2C1.o ./Sources/CLS1.o ./Sources/CS1.o ./Sources/Cpu.o ./Sources/EInt1.o ./Sources/EInt2.o ./Sources/EInt3.o ./Sources/EInt4.o ./Sources/EInt5.o ./Sources/EInt6.o ./Sources/EInt7.o ./Sources/Events.o ./Sources/FC1.o ./Sources/FRTOS1.o ./Sources/GPIO1.o ./Sources/MCUC1.o ./Sources/PE_LDD.o ./Sources/PWM1.o ./Sources/PWM2.o ./Sources/PWM3.o ./Sources/PWM4.o ./Sources/Rx1.o ./Sources/TMOUT1.o ./Sources/TU1.o ./Sources/TU3.o ./Sources/Tx1.o ./Sources/USB0.o ./Sources/USB1.o ./Sources/UTIL1.o ./Sources/Vectors.o ./Sources/WAIT1.o ./Sources/XF1.o ./Sources/croutine.o ./Sources/event_groups.o ./Sources/heap_1.o ./Sources/heap_2.o ./Sources/heap_3.o ./Sources/heap_4.o ./Sources/heap_5.o ./Sources/list.o ./Sources/main.o ./Sources/port.o ./Sources/queue.o ./Sources/tasks.o ./Sources/timers.o ./Sources/usb_cdc.o ./Sources/usb_cdc_pstn.o ./Sources/usb_class.o ./Sources/usb_dci_kinetis.o ./Sources/usb_descriptor.o ./Sources/usb_driver.o ./Sources/usb_framework.o ./Sources/wdt_kinetis.o  ./Project_Settings/Startup_Code/startup.o   -lm
@@ -71,3 +408,88 @@ make --no-print-directory post-build
 'Generate S19 File'
 arm-none-eabi-objcopy -O srec C:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Debug/FRDM-KL25Z_BlinkEclipse.elf FRDM-KL25Z_BlinkEclipse.s19
 ' '
+11:18:47 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+make all 
+make: Nothing to be done for `all'.
+11:20:02 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+make all 
+make: Nothing to be done for `all'.
+11:32:23 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+make all 
+'Building file: ../Sources/libSENSVECT/GYROACCVect.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libSENSVECT/GYROACCVect.d" -MT"Sources/libSENSVECT/GYROACCVect.d" -o "Sources/libSENSVECT/GYROACCVect.o" "../Sources/libSENSVECT/GYROACCVect.c"
+../Sources/libSENSVECT/GYROACCVect.c: In function 'GYROACCVECT_calibOffsets':
+../Sources/libSENSVECT/GYROACCVect.c:243:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+'Finished building: ../Sources/libSENSVECT/GYROACCVect.c'
+' '
+'Building target: FRDM-KL25Z_BlinkEclipse.elf'
+'Invoking: Cross GCC Linker'
+arm-none-eabi-gcc -nostartfiles -mthumb -mcpu=cortex-m0 -TC:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Project_Settings/Linker_Files/MKL25Z128_flash.ld -o "FRDM-KL25Z_BlinkEclipse.elf"  ./Sources/libUSB/an_packet_protocol.o ./Sources/libUSB/an_packets.o ./Sources/libUSB/com.o ./Sources/libUSB/crc.o ./Sources/libUSB/usbdrive.o  ./Sources/libSENSVECT/GYROACCVect.o  ./Sources/libSENSDRIVE/mpu6050.o  ./Sources/libRECDRIVER/recdriver.o  ./Sources/libMOTDRIVE/optoe300.o  ./Sources/libCONTROL/control.o  ./Sources/libADCS/gAtt.o  ./Sources/CDC1.o ./Sources/CI2C1.o ./Sources/CLS1.o ./Sources/CS1.o ./Sources/Cpu.o ./Sources/EInt1.o ./Sources/EInt2.o ./Sources/EInt3.o ./Sources/EInt4.o ./Sources/EInt5.o ./Sources/EInt6.o ./Sources/EInt7.o ./Sources/Events.o ./Sources/FC1.o ./Sources/FRTOS1.o ./Sources/GPIO1.o ./Sources/MCUC1.o ./Sources/PE_LDD.o ./Sources/PWM1.o ./Sources/PWM2.o ./Sources/PWM3.o ./Sources/PWM4.o ./Sources/Rx1.o ./Sources/TMOUT1.o ./Sources/TU1.o ./Sources/TU3.o ./Sources/Tx1.o ./Sources/USB0.o ./Sources/USB1.o ./Sources/UTIL1.o ./Sources/Vectors.o ./Sources/WAIT1.o ./Sources/XF1.o ./Sources/croutine.o ./Sources/event_groups.o ./Sources/heap_1.o ./Sources/heap_2.o ./Sources/heap_3.o ./Sources/heap_4.o ./Sources/heap_5.o ./Sources/list.o ./Sources/main.o ./Sources/port.o ./Sources/queue.o ./Sources/tasks.o ./Sources/timers.o ./Sources/usb_cdc.o ./Sources/usb_cdc_pstn.o ./Sources/usb_class.o ./Sources/usb_dci_kinetis.o ./Sources/usb_descriptor.o ./Sources/usb_driver.o ./Sources/usb_framework.o ./Sources/wdt_kinetis.o  ./Project_Settings/Startup_Code/startup.o   -lm
+'Finished building target: FRDM-KL25Z_BlinkEclipse.elf'
+' '
+make --no-print-directory post-build
+'Generate S19 File'
+arm-none-eabi-objcopy -O srec C:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Debug/FRDM-KL25Z_BlinkEclipse.elf FRDM-KL25Z_BlinkEclipse.s19
+' '
+11:33:51 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+make all 
+'Building file: ../Sources/libCONTROL/control.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libCONTROL/control.d" -MT"Sources/libCONTROL/control.d" -o "Sources/libCONTROL/control.o" "../Sources/libCONTROL/control.c"
+'Finished building: ../Sources/libCONTROL/control.c'
+' '
+'Building target: FRDM-KL25Z_BlinkEclipse.elf'
+'Invoking: Cross GCC Linker'
+arm-none-eabi-gcc -nostartfiles -mthumb -mcpu=cortex-m0 -TC:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Project_Settings/Linker_Files/MKL25Z128_flash.ld -o "FRDM-KL25Z_BlinkEclipse.elf"  ./Sources/libUSB/an_packet_protocol.o ./Sources/libUSB/an_packets.o ./Sources/libUSB/com.o ./Sources/libUSB/crc.o ./Sources/libUSB/usbdrive.o  ./Sources/libSENSVECT/GYROACCVect.o  ./Sources/libSENSDRIVE/mpu6050.o  ./Sources/libRECDRIVER/recdriver.o  ./Sources/libMOTDRIVE/optoe300.o  ./Sources/libCONTROL/control.o  ./Sources/libADCS/gAtt.o  ./Sources/CDC1.o ./Sources/CI2C1.o ./Sources/CLS1.o ./Sources/CS1.o ./Sources/Cpu.o ./Sources/EInt1.o ./Sources/EInt2.o ./Sources/EInt3.o ./Sources/EInt4.o ./Sources/EInt5.o ./Sources/EInt6.o ./Sources/EInt7.o ./Sources/Events.o ./Sources/FC1.o ./Sources/FRTOS1.o ./Sources/GPIO1.o ./Sources/MCUC1.o ./Sources/PE_LDD.o ./Sources/PWM1.o ./Sources/PWM2.o ./Sources/PWM3.o ./Sources/PWM4.o ./Sources/Rx1.o ./Sources/TMOUT1.o ./Sources/TU1.o ./Sources/TU3.o ./Sources/Tx1.o ./Sources/USB0.o ./Sources/USB1.o ./Sources/UTIL1.o ./Sources/Vectors.o ./Sources/WAIT1.o ./Sources/XF1.o ./Sources/croutine.o ./Sources/event_groups.o ./Sources/heap_1.o ./Sources/heap_2.o ./Sources/heap_3.o ./Sources/heap_4.o ./Sources/heap_5.o ./Sources/list.o ./Sources/main.o ./Sources/port.o ./Sources/queue.o ./Sources/tasks.o ./Sources/timers.o ./Sources/usb_cdc.o ./Sources/usb_cdc_pstn.o ./Sources/usb_class.o ./Sources/usb_dci_kinetis.o ./Sources/usb_descriptor.o ./Sources/usb_driver.o ./Sources/usb_framework.o ./Sources/wdt_kinetis.o  ./Project_Settings/Startup_Code/startup.o   -lm
+'Finished building target: FRDM-KL25Z_BlinkEclipse.elf'
+' '
+make --no-print-directory post-build
+'Generate S19 File'
+arm-none-eabi-objcopy -O srec C:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Debug/FRDM-KL25Z_BlinkEclipse.elf FRDM-KL25Z_BlinkEclipse.s19
+' '
+11:34:54 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+make all 
+'Building file: ../Sources/libSENSVECT/GYROACCVect.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libSENSVECT/GYROACCVect.d" -MT"Sources/libSENSVECT/GYROACCVect.d" -o "Sources/libSENSVECT/GYROACCVect.o" "../Sources/libSENSVECT/GYROACCVect.c"
+../Sources/libSENSVECT/GYROACCVect.c: In function 'GYROACCVECT_calibOffsets':
+../Sources/libSENSVECT/GYROACCVect.c:225:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+'Finished building: ../Sources/libSENSVECT/GYROACCVect.c'
+' '
+'Building target: FRDM-KL25Z_BlinkEclipse.elf'
+'Invoking: Cross GCC Linker'
+arm-none-eabi-gcc -nostartfiles -mthumb -mcpu=cortex-m0 -TC:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Project_Settings/Linker_Files/MKL25Z128_flash.ld -o "FRDM-KL25Z_BlinkEclipse.elf"  ./Sources/libUSB/an_packet_protocol.o ./Sources/libUSB/an_packets.o ./Sources/libUSB/com.o ./Sources/libUSB/crc.o ./Sources/libUSB/usbdrive.o  ./Sources/libSENSVECT/GYROACCVect.o  ./Sources/libSENSDRIVE/mpu6050.o  ./Sources/libRECDRIVER/recdriver.o  ./Sources/libMOTDRIVE/optoe300.o  ./Sources/libCONTROL/control.o  ./Sources/libADCS/gAtt.o  ./Sources/CDC1.o ./Sources/CI2C1.o ./Sources/CLS1.o ./Sources/CS1.o ./Sources/Cpu.o ./Sources/EInt1.o ./Sources/EInt2.o ./Sources/EInt3.o ./Sources/EInt4.o ./Sources/EInt5.o ./Sources/EInt6.o ./Sources/EInt7.o ./Sources/Events.o ./Sources/FC1.o ./Sources/FRTOS1.o ./Sources/GPIO1.o ./Sources/MCUC1.o ./Sources/PE_LDD.o ./Sources/PWM1.o ./Sources/PWM2.o ./Sources/PWM3.o ./Sources/PWM4.o ./Sources/Rx1.o ./Sources/TMOUT1.o ./Sources/TU1.o ./Sources/TU3.o ./Sources/Tx1.o ./Sources/USB0.o ./Sources/USB1.o ./Sources/UTIL1.o ./Sources/Vectors.o ./Sources/WAIT1.o ./Sources/XF1.o ./Sources/croutine.o ./Sources/event_groups.o ./Sources/heap_1.o ./Sources/heap_2.o ./Sources/heap_3.o ./Sources/heap_4.o ./Sources/heap_5.o ./Sources/list.o ./Sources/main.o ./Sources/port.o ./Sources/queue.o ./Sources/tasks.o ./Sources/timers.o ./Sources/usb_cdc.o ./Sources/usb_cdc_pstn.o ./Sources/usb_class.o ./Sources/usb_dci_kinetis.o ./Sources/usb_descriptor.o ./Sources/usb_driver.o ./Sources/usb_framework.o ./Sources/wdt_kinetis.o  ./Project_Settings/Startup_Code/startup.o   -lm
+'Finished building target: FRDM-KL25Z_BlinkEclipse.elf'
+' '
+make --no-print-directory post-build
+'Generate S19 File'
+arm-none-eabi-objcopy -O srec C:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Debug/FRDM-KL25Z_BlinkEclipse.elf FRDM-KL25Z_BlinkEclipse.s19
+' '
+11:36:33 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+make all 
+'Building file: ../Sources/libADCS/gAtt.c'
+'Invoking: Cross GCC Compiler'
+arm-none-eabi-gcc -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Headers" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Project_Settings\Startup_Code" -I"C:\Users\Raphael\workspace\FRDM-KL25Z_BlinkEclipse\Sources" -O0 -g3 -Wall -c -fmessage-length=0 -mcpu=cortex-m0 -mabi=aapcs -mthumb -msoft-float -MMD -MP -MF"Sources/libADCS/gAtt.d" -MT"Sources/libADCS/gAtt.d" -o "Sources/libADCS/gAtt.o" "../Sources/libADCS/gAtt.c"
+../Sources/libADCS/gAtt.c: In function 'GATT_getAtt':
+../Sources/libADCS/gAtt.c:47:8: warning: unused variable 'A_norm' [-Wunused-variable]
+  float A_norm = GATT_normVector(A);
+        ^
+'Finished building: ../Sources/libADCS/gAtt.c'
+' '
+'Building target: FRDM-KL25Z_BlinkEclipse.elf'
+'Invoking: Cross GCC Linker'
+arm-none-eabi-gcc -nostartfiles -mthumb -mcpu=cortex-m0 -TC:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Project_Settings/Linker_Files/MKL25Z128_flash.ld -o "FRDM-KL25Z_BlinkEclipse.elf"  ./Sources/libUSB/an_packet_protocol.o ./Sources/libUSB/an_packets.o ./Sources/libUSB/com.o ./Sources/libUSB/crc.o ./Sources/libUSB/usbdrive.o  ./Sources/libSENSVECT/GYROACCVect.o  ./Sources/libSENSDRIVE/mpu6050.o  ./Sources/libRECDRIVER/recdriver.o  ./Sources/libMOTDRIVE/optoe300.o  ./Sources/libCONTROL/control.o  ./Sources/libADCS/gAtt.o  ./Sources/CDC1.o ./Sources/CI2C1.o ./Sources/CLS1.o ./Sources/CS1.o ./Sources/Cpu.o ./Sources/EInt1.o ./Sources/EInt2.o ./Sources/EInt3.o ./Sources/EInt4.o ./Sources/EInt5.o ./Sources/EInt6.o ./Sources/EInt7.o ./Sources/Events.o ./Sources/FC1.o ./Sources/FRTOS1.o ./Sources/GPIO1.o ./Sources/MCUC1.o ./Sources/PE_LDD.o ./Sources/PWM1.o ./Sources/PWM2.o ./Sources/PWM3.o ./Sources/PWM4.o ./Sources/Rx1.o ./Sources/TMOUT1.o ./Sources/TU1.o ./Sources/TU3.o ./Sources/Tx1.o ./Sources/USB0.o ./Sources/USB1.o ./Sources/UTIL1.o ./Sources/Vectors.o ./Sources/WAIT1.o ./Sources/XF1.o ./Sources/croutine.o ./Sources/event_groups.o ./Sources/heap_1.o ./Sources/heap_2.o ./Sources/heap_3.o ./Sources/heap_4.o ./Sources/heap_5.o ./Sources/list.o ./Sources/main.o ./Sources/port.o ./Sources/queue.o ./Sources/tasks.o ./Sources/timers.o ./Sources/usb_cdc.o ./Sources/usb_cdc_pstn.o ./Sources/usb_class.o ./Sources/usb_dci_kinetis.o ./Sources/usb_descriptor.o ./Sources/usb_driver.o ./Sources/usb_framework.o ./Sources/wdt_kinetis.o  ./Project_Settings/Startup_Code/startup.o   -lm
+'Finished building target: FRDM-KL25Z_BlinkEclipse.elf'
+' '
+make --no-print-directory post-build
+'Generate S19 File'
+arm-none-eabi-objcopy -O srec C:/Users/Raphael/workspace/FRDM-KL25Z_BlinkEclipse/Debug/FRDM-KL25Z_BlinkEclipse.elf FRDM-KL25Z_BlinkEclipse.s19
+' '
+11:37:07 **** Incremental Build of configuration Debug for project FRDM-KL25Z_BlinkEclipse ****
+make all 
+make: Nothing to be done for `all'.

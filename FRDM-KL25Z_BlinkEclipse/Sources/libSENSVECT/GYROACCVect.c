@@ -60,42 +60,50 @@ fixed point precision: 16 bits
 
 
 #define SAMPLEFILTER_TAP_NUM 		9
-#define SAMPLEFILTER_ACC_TAP_NUM 10
+#define SAMPLEFILTER_ACC_TAP_NUM 	9
 
 #define GYROACCVECT_ACCEL_G_AMPL	9.81
 
 static int filter_taps[SAMPLEFILTER_TAP_NUM] = {
-//		  2211,
-//		  5079,
-//		  8178,
-//		  11122,
-//		  12504,
-//		  11122,
-//		  8178,
-//		  5079,
-//		  2211
-  2730,
-  6992,
-  8951,
-  12721,
-  15697,
-  12721,
-  8951,
-  6992,
-  2730
+		  2886,
+		  6629,
+		  9133,
+		  12747,
+		  15278,
+		  12747,
+		  9133,
+		  6629,
+		  2886
+//  2730,
+//  6992,
+//  8951,
+//  12721,
+//  15697,
+//  12721,
+//  8951,
+//  6992,
+//  2730
 };
 
 static int filter_acc_taps[SAMPLEFILTER_ACC_TAP_NUM] = {
-  1264,
-  3267,
-  6082,
-  8855,
-  10589,
-  10589,
-  8855,
-  6082,
-  3267,
-  1264
+		  2886,
+		  6629,
+		  9133,
+		  12747,
+		  15278,
+		  12747,
+		  9133,
+		  6629,
+		  2886
+		  //  2730,
+		  //  6992,
+		  //  8951,
+		  //  12721,
+		  //  15697,
+		  //  12721,
+		  //  8951,
+		  //  6992,
+		  //  2730
 };
 
 typedef struct {
@@ -379,27 +387,25 @@ void SampleFilter_acc_put(SampleFilter_acc* f, int input) {
 }
 
 int SampleFilter_acc_get(SampleFilter_acc* f) {
-  long acc = 0;
-  int index = f->last_index;
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[0];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[1];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[2];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[3];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[4];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[5];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[6];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[7];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[8];
-    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
-    acc += (long)f->history[index] * filter_acc_taps[9];
-  return acc >> 16;
+	  long acc = 0;
+	  int index = f->last_index;
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[0];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[1];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[2];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[3];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[4];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[5];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[6];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[7];
+	    index = index != 0 ? index-1 : SAMPLEFILTER_ACC_TAP_NUM-1;
+	    acc += (long)f->history[index] * filter_acc_taps[8];
+	  return acc >> 16;	//16 ?
 }

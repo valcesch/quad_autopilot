@@ -106,11 +106,11 @@ static portTASK_FUNCTION(Task_adcs, pvParameters) {
 				GYROACCVECT_acc_butterFilter_y(A[1], &gstate.a_y);
 				GYROACCVECT_acc_butterFilter_z(A[2], &gstate.a_z);
 
-				GATT_getAtt(&gstate.w_x, &gstate.a_x, Eul_tmp, 0.002);
+				GATT_getAtt(&gstate.w_x, &gstate.a_x, &gstate.yaw, 0.002);
 
-				GATT_x_angle_LP(Eul_tmp[0], &gstate.yaw);
-				GATT_y_angle_LP(Eul_tmp[1], &gstate.pitch);
-				GATT_z_angle_LP(Eul_tmp[2], &gstate.roll);
+//				GATT_x_angle_LP(Eul_tmp[0], &gstate.yaw);
+//				GATT_y_angle_LP(Eul_tmp[1], &gstate.pitch);
+//				GATT_z_angle_LP(Eul_tmp[2], &gstate.roll);
 
 				stab_comp = 1;
 			}
